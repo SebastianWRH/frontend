@@ -246,16 +246,16 @@
   .carousel-track {
     display: flex;
     gap: 12px;
-    overflow: hidden;            /* oculta el resto */
+    overflow: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     width: 100%;
   }
 
-  /* Cada tarjeta ocupa la mayor parte del ancho (ajusta 82% si quieres más margen) */
+  /* Cada tarjeta ocupa la mayor parte del ancho */
   .carousel-track .contenedor-imagen {
     flex: 0 0 86%;
-    aspect-ratio: 1 / 1;         /* cuadrada; cambia si quieres otra relación */
+    aspect-ratio: 1 / 1;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -281,7 +281,7 @@
     width: 90%;
   }
 
-  /* Botones flecha */
+  /* Botones flecha en móvil */
   .carousel-btn {
     background: rgba(255,255,255,0.95);
     border: 1px solid rgba(0,0,0,0.06);
@@ -297,13 +297,16 @@
     box-shadow: 0 6px 14px rgba(0,0,0,0.08);
     user-select: none;
   }
-  .carousel-btn:disabled { opacity: 0.45; cursor: default; }
 
-  /* Ocultar botones en desktop (por si están presentes) */
-  @media (min-width: 769px) {
-    .carousel-btn { display: none; }
-    .carousel-track { overflow: visible; gap: 20px; }
-    .carousel-track .contenedor-imagen { flex: initial; width: auto; aspect-ratio: unset; }
+  .carousel-btn:disabled {
+    opacity: 0.45;
+    cursor: default;
   }
 }
 
+/* Ocultar botones en desktop */
+@media (min-width: 769px) {
+  .carousel-btn {
+    display: none !important;
+  }
+}
