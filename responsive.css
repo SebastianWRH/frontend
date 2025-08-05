@@ -225,3 +225,79 @@
     max-width: 100%;
   }
 }
+
+
+
+
+
+/* ===== Uniformar tarjetas "Compra por categoría" SOLO en móvil ===== */
+@media (max-width: 768px) {
+
+  /* Grid: 1 columna en móvil (puedes cambiar a 2 con repeat(2,1fr) si quieres) */
+  .pro-nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 12px;
+  }
+
+  /* Cada contenedor tiene relación de aspecto fija (cuadrada). */
+  .contenedor-imagen {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;       /* cuadrado. Cambia a 4/3 para rectangular */
+    overflow: hidden;
+    border-radius: 10px;
+    background: #f7f7f7;
+  }
+
+  /* Imagen se adapta al contenedor, centrada y recortada si hace falta */
+  .contenedor-imagen img.img-producto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;         /* mantiene proporción, recorta lo que sobra */
+    display: block;
+    object-position: center;   /* centra la parte visible */
+  }
+
+  /* overlay semi-transparente igual tamaño */
+  .contenedor-imagen .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.28) 100%);
+    pointer-events: none;
+  }
+
+  /* Texto encima centrado (o abajo) */
+  .texto-encima {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* centra vertical y horizontal */
+    z-index: 20;
+    text-align: center;
+    color: #fff;
+    padding: 8px;
+    width: 90%;
+  }
+  .texto-encima h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.05rem;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+  }
+  .texto-encima .btn-comprar {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.92);
+    color: #222;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+
+  /* Opcional: reducir márgenes/espaciado del resto */
+  .productos h1, .productos p {
+    padding: 0 12px;
+  }
+}
