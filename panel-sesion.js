@@ -36,3 +36,43 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+
+
+
+
+
+
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('menu');
+
+  if (!btn || !menu) return;
+
+  btn.addEventListener('click', (e) => {
+    const opened = menu.classList.toggle('open');
+    btn.classList.toggle('active', opened);
+    btn.setAttribute('aria-expanded', opened ? 'true' : 'false');
+  });
+
+  // click fuera para cerrar
+  document.addEventListener('click', (e) => {
+    if (!menu.classList.contains('open')) return;
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+      menu.classList.remove('open');
+      btn.classList.remove('active');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Escape para cerrar
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('open')) {
+      menu.classList.remove('open');
+      btn.classList.remove('active');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
