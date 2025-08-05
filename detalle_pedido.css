@@ -1,0 +1,110 @@
+/* detalle_pedido.css */
+
+/* Reset básico */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f8f9fa;
+  color: #333;
+}
+
+/* Contenedor principal */
+.pedido-detalle-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Títulos */
+h1, h2 {
+  text-align: center;
+  color: #444;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+h2 {
+  margin-top: 30px;
+  font-size: 1.4rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+/* Información del pedido */
+.pedido-info {
+  background: #f1f3f5;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+.pedido-info p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+/* Lista de productos */
+.productos-lista {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.producto-item {
+  display: flex;
+  gap: 12px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 12px;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.producto-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.07);
+}
+
+.producto-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.producto-item h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.producto-item p {
+  margin: 3px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Botón volver */
+.btn-volver {
+  display: inline-block;
+  background: #ff6b6b;
+  color: white;
+  padding: 10px 16px;
+  margin-top: 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.btn-volver:hover {
+  background: #e63946;
+}

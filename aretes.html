@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo - AURORA</title>
+  <link rel="stylesheet" href="aretes.css">
+</head>
+<body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (!usuario) {
+      window.location.href = 'login.html';
+    }
+  });
+</script>
+
+<header>
+  <nav class="nav">
+    <div class="marca"><h1>AURORA</h1></div>
+    <div class="menu">
+      <a href="inicio.html">Inicio</a>
+      <a href="aretes.html">Catálogo</a>
+      <a href="#servicios">Contáctame</a>
+    </div>
+
+    <div class="acciones">
+      <div class="usuario" id="usuario-menu">
+        <i class="fas fa-user"></i>
+        <div class="nombre-usuario-contenedor">
+          <p class="bienvenida">Bienvenido</p>
+          <span id="nombre-usuario"></span>
+        </div>
+        <div class="icon-login" id="toggle-menu">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="login-svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+        </div>
+
+        <div class="menu-desplegable" id="menu-desplegable">
+          <a href="perfil.html">Perfil</a>
+          <a href="pedidos.html">Pedidos</a>
+          <a href="favoritos.html">Favoritos</a>
+          <a href="#" id="cerrar-sesion">Cerrar sesión</a>
+        </div>
+      </div>
+
+      <div class="icon-cart">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor" class="cart-svg">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 
+            1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 
+            1.125 0 0 1-1.12-1.243l1.264-12A1.125 
+            1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 
+            1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 
+            0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 
+            1-.75 0 .375.375 0 0 1 .75 0Z" />
+        </svg>
+        <div class="count-product"><span id="contador-productos">0</span></div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="texto-body">
+  <h1>COMPRA POR CATEGORÍA</h1>
+  <p>El arte cerca de ti</p>
+</div>
+
+<div class="contenedor-principal">
+  <aside class="filtros">
+    <h3>Filtrar por:</h3>
+    <div>
+      <h4>Categoría</h4>
+      <label><input type="checkbox" value="aretes" class="filtro-categoria"> Aretes</label><br>
+      <label><input type="checkbox" value="collares" class="filtro-categoria"> Collares</label><br>
+      <label><input type="checkbox" value="pulseras" class="filtro-categoria"> Pulseras</label><br>
+      <label><input type="checkbox" value="anillos" class="filtro-categoria"> Anillos</label><br>
+    </div>
+
+    <div>
+      <h4>Precio máximo: <span id="precio-valor">200</span></h4>
+      <input type="range" min="0" max="200" value="200" id="filtro-precio">
+    </div>
+  </aside>
+
+  <div id="catalogo" class="catalogo"></div>
+</div>
+
+<script src="productos.js"></script>
+<script>
+  const catalogo = document.getElementById("catalogo");
+  const filtroPrecio = document.getElementById("filtro-precio");
+  const precioValor = document.getElementById("precio-valor");
+  const checkboxes = document.querySelectorAll(".filtro-categoria");
+
+  const params = new URLSearchParams(window.location.search);
+  const categoriaURL = params.get("categoria");
+
+  let productosBD = []; // ← Aquí guardaremos los productos desde el backend
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const res = await fetch('https://aurora-backend-ve7u.onrender.com/productos');
+      productosBD = await res.json();
+
+      if (categoriaURL) {
+        checkboxes.forEach(cb => {
+          if (cb.value === categoriaURL) cb.checked = true;
+        });
+      }
+
+      aplicarFiltros(); // ← Ejecutar filtrado con datos ya obtenidos
+
+    } catch (error) {
+      console.error('Error al obtener productos:', error);
+      catalogo.innerHTML = '<p>Error al cargar productos. Intenta nuevamente.</p>';
+    }
+  });
+
+  function renderizarProductos(productos) {
+    catalogo.innerHTML = "";
+    if (productos.length === 0) {
+      catalogo.innerHTML = "<p>No hay productos que coincidan con el filtro.</p>";
+      return;
+    }
+
+    productos.forEach(producto => {
+      const card = document.createElement("div");
+      card.className = "producto";
+      card.innerHTML = `
+        <a href="producto.html?id=${producto.id}">
+          <img src="${producto.miniatura}" alt="${producto.nombre}" class="img-producto">
+        </a>
+        <h3>${producto.nombre}</h3>
+        <p><strong>S/ ${producto.precio}</strong></p>
+      `;
+      catalogo.appendChild(card);
+    });
+  }
+
+  function aplicarFiltros() {
+    const precioMax = parseFloat(filtroPrecio.value);
+    const categoriasSeleccionadas = Array.from(checkboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value);
+
+    const filtrados = productosBD.filter(p => {
+      const cumplePrecio = parseFloat(p.precio) <= precioMax;
+      const cumpleCategoria = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.includes(p.categoria);
+      return cumplePrecio && cumpleCategoria;
+    });
+
+    renderizarProductos(filtrados);
+  }
+
+  filtroPrecio.addEventListener("input", () => {
+    precioValor.textContent = filtroPrecio.value;
+    aplicarFiltros();
+  });
+
+  checkboxes.forEach(cb => cb.addEventListener("change", aplicarFiltros));
+</script>
+
+<script src="carrito-slide.js"></script>
+<script src="user-panel.js"></script>
+</body>
+</html>

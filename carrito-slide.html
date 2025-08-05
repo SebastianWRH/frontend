@@ -1,0 +1,44 @@
+<style>/* Botón Confirmar Compra */
+#btn-confirmar {
+  display: block;
+  width: 90%;
+  margin: 15px auto;
+  background: linear-gradient(135deg, #ff7b54, #ff4e00);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 12px rgba(255, 78, 0, 0.4);
+}
+
+#btn-confirmar:hover {
+  background: linear-gradient(135deg, #ff4e00, #ff7b54);
+  box-shadow: 0px 6px 16px rgba(255, 78, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+#btn-confirmar:active {
+  transform: scale(0.97);
+}
+</style>
+
+
+
+<!-- carrito-slide.html -->
+<div id="carrito-slide" class="carrito-slide">
+  <div class="carrito-header">
+    <h3>Tu carrito</h3>
+    <button id="cerrar-carrito">&times;</button>
+  </div>
+  <div id="contenido-carrito" class="carrito-contenido">
+    <!-- Aquí se agregan productos dinámicamente -->
+  </div>
+  <!-- botón en tu HTML -->
+  <button id="btn-confirmar">Confirmar compra</button>
+
+</div>
+

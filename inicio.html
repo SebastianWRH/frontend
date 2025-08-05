@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header>
+    <nav class="nav">
+      <!-- Logo -->
+      <div class="marca">
+        <h1>AURORA</h1>
+      </div>
+      <!-- Menú -->
+      <div class="menu">
+        <a href="inicio.html">Inicio</a>
+        <a href="aretes.html">Catálogo</a>
+        <a href="contactame.html">Contáctame</a>
+      </div>
+
+
+
+      <div class="acciones">
+        <!-- Login -->
+        <div class="usuario" id="usuario-menu">
+          <i class="fas fa-user"></i>
+          <div class="nombre-usuario-contenedor">
+          <p class="bienvenida">Bienvenido, <span id="nombre-usuario"></span></p>
+
+          </div>
+          <div class="icon-login" id="toggle-menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="login-svg">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+          </div>
+
+          <!-- Menú desplegable -->
+          <div class="menu-desplegable" id="menu-desplegable">
+            <a href="perfil.html">Perfil</a>
+            <a href="pedidos.html">Pedidos</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="#" id="cerrar-sesion">Cerrar sesión</a>
+          </div>
+        </div>
+        <!-- Carrito -->
+        <div class="icon-cart">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="cart-svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+          </svg>
+          <div class="count-product"><span id="contador-productos">0</span></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Impón tu estilo con nuestra bisutería artesanal única </h2>
+      <p>Sumérgete en el mundo de la elegancia natural. Cada pieza está hecha a mano con dedicación, cuidando cada
+        detalle para que expreses tu autenticidad con estilo.</p>
+      <p>Diseños atemporales, materiales nobles y ese toque artesanal que marca la diferencia.</p>
+      <p>No sigas modas. Llévalas puestas!</p>
+    </div>
+  </section>
+
+
+
+  <section class="productos">
+    <h1>COMPRA POR CATEGORIA</h1>
+    <p>El arte cerca de ti</p>
+    <nav class="pro-nav">
+
+      <div class="contenedor-imagen">
+        <a href="aretes.html?categoria=aretes">
+          <img src="productos/aretes-negros.png" alt="Aretes" class="img-producto" title="Ver Aretes">
+          <div class="overlay"></div>
+        </a>
+        <div class="texto-encima">
+          <h3>Aretes</h3>
+          <a href="aretes.html?categoria=aretes" class="btn-comprar">Ver Todo</a>
+        </div>
+      </div>
+
+
+      <div class="contenedor-imagen">
+        <a href="aretes.html?categoria=aretes">
+          <img src="productos/anillo1.jpg" alt="Anillos" class="img-producto" title="Ver Anillos">
+          <div class="overlay"></div>
+        </a>
+        <div class="texto-encima">
+          <h3>Anillos</h3>
+          <a href="aretes.html?categoria=aretes" class="btn-comprar">Ver Todo</a>
+        </div>
+      </div>
+
+
+      <div class="contenedor-imagen">
+        <a href="#pulseras">
+          <img src="productos/pulsera.png" alt="Pulseras" class="img-producto" title="Ver Pulseras">
+          <div class="overlay"></div>
+        </a>
+        <div class="texto-encima">
+          <h3>Pulseras</h3>
+          <a href="#anillos" class="btn-comprar">Ver Todo</a>
+        </div>
+      </div>
+    </nav>
+    <P>ㅤ</P>
+    <P>ㅤ</P>
+    <P>ㅤ</P>
+
+    <h1>INFANTIL</h1>
+    <p>El arte cerca de ti</p>
+    <nav class="pro-nav">
+      <a href="aretes.html?categoria=aretes">
+        <img src="productos/aretes-negros.png" alt="Aretes" class="img-producto" title="Ver Aretes">
+      </a>
+      <a href="aretes.html?categoria=anillos">
+        <img src="productos/anillo1.jpg" alt="Anillos" class="img-producto" title="Ver Anillos">
+      </a>
+      <a href="#pulseras">
+        <img src="productos/pulsera.png" alt="Pulseras" class="img-producto" title="Ver Pulseras">
+      </a>
+    </nav>
+
+  </section>
+
+  <script src="carrito-slide.js"></script>
+
+  <script src="user-panel.js"></script>
+
+
+
+
+
+</body>
+
+</html>

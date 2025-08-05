@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="perfil.css">
+</head>
+
+<body>
+
+
+  <header>
+    <nav class="nav">
+      <!-- Logo -->
+      <div class="marca">
+        <h1>AURORA</h1>
+      </div>
+      <!-- Menú -->
+      <div class="menu">
+        <a href="inicio.html">Inicio</a>
+        <a href="aretes.html">Catálogo</a>
+        <a href="#servicios">Contáctame</a>
+      </div>
+
+
+
+      <div class="acciones">
+        <!-- Login -->
+        <div class="usuario" id="usuario-menu">
+          <i class="fas fa-user"></i>
+          <div class="nombre-usuario-contenedor">
+            <p class="bienvenida">Bienvenido</p>
+            <span id="nombre-usuario"></span>
+          </div>
+          <div class="icon-login" id="toggle-menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="login-svg">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+          </div>
+
+          <!-- Menú desplegable -->
+          <div class="menu-desplegable" id="menu-desplegable">
+            <a href="perfil.html">Perfil</a>
+            <a href="pedidos.html">Pedidos</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="#" id="cerrar-sesion">Cerrar sesión</a>
+          </div>
+        </div>
+        <!-- Carrito -->
+        <div class="icon-cart">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="cart-svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+          </svg>
+          <div class="count-product"><span id="contador-productos">0</span></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="tabs-usuario">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="mostrarTabUsuario(event, 'perfil')">Perfil</button>
+      <button class="tab-btn" onclick="window.location.href='favoritos.html'">Favoritos</button>
+      <button class="tab-btn" onclick="mostrarTabUsuario(event, 'pedidos')">Pedidos</button>
+    </div>
+
+    <div class="tab-content" id="perfil" style="display: block;">
+      <div id="perfil-contenido">
+        <!-- Aquí se insertará dinámicamente el perfil con JS -->
+      </div>
+    </div>
+
+      <div class="tab-content" id="favoritos" style="display: none;">
+      <p>Aquí van los productos que has marcado como favoritos.</p>
+    </div>
+
+
+    <div class="tab-content" id="pedidos" style="display: none;">
+      <p>Aquí se mostrarán tus pedidos realizados.</p>
+    </div>
+  </div>
+
+
+
+  <script src="carrito-slide.js"></script>
+  <script src="perfil.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const usuario = JSON.parse(localStorage.getItem('usuario'));
+      const span = document.getElementById('nombre-usuario');
+      const menu = document.getElementById('menu-desplegable');
+      const toggle = document.getElementById('toggle-menu');
+      const cerrarSesionBtn = document.getElementById('cerrar-sesion');
+      const contenedorUsuario = document.getElementById('usuario-menu');
+
+      if (usuario && usuario.nombre) {
+        span.textContent = usuario.nombre;
+
+        // Mostrar/ocultar el menú
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation(); // No permite que el clic se propague al document
+          menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Cerrar el menú al hacer clic fuera
+        document.addEventListener('click', (e) => {
+          if (!contenedorUsuario.contains(e.target)) {
+            menu.style.display = 'none';
+          }
+        });
+
+        // Cerrar sesión
+        cerrarSesionBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          localStorage.removeItem('usuario');
+          window.location.href = 'login.html'; // Redirige al login después de cerrar sesión
+        });
+
+      } else {
+        // Redirige al login si no hay usuario
+        contenedorUsuario.addEventListener('click', () => {
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+
+
+
+
+</body>
+
+</html>

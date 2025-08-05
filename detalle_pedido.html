@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Pedido</title>
+  <link rel="stylesheet" href="detalle_pedido.css">
+</head>
+<body>
+
+  <div class="pedido-detalle-container">
+    <h1>Detalle del Pedido</h1>
+
+    <div id="info-pedido" class="pedido-info">
+      <!-- Aquí se cargará la info del pedido -->
+    </div>
+
+    <h2>Productos</h2>
+    <div id="lista-productos" class="productos-lista">
+      <!-- Aquí se cargarán los productos -->
+    </div>
+
+    <button onclick="window.location.href='pedidos.html'" class="btn-volver">⬅ Volver a mis pedidos</button>
+  </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+  const idPedido = params.get("id");
+
+  const infoCont = document.getElementById("info-pedido");
+  const lista = document.getElementById("lista-productos");
+
+  if (!idPedido) {
+    infoCont.innerHTML = "<p>ID de pedido no especificado.</p>";
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://aurora-backend-ve7u.onrender.com/pedido/${idPedido}`);
+    if (!res.ok) throw new Error('Pedido no encontrado');
+
+    const data = await res.json();
+    // data puede ser { pedido, detalles } o directamente un objeto pedido con productos
+    const pedido = data.pedido || data;
+    const detalles = data.detalles || data.productos || data.productos_pedido || [];
+
+    // Mostrar info del pedido (con seguridad por si faltan campos)
+    const fechaStr = pedido.fecha ? new Date(pedido.fecha).toLocaleString() : "—";
+    const estadoStr = pedido.estado || "—";
+    const totalNum = pedido.total != null ? Number(pedido.total) : detalles.reduce((s, d) => s + (Number(d.precio_unitario || d.precio || 0) * Number(d.cantidad || 1)), 0);
+
+    infoCont.innerHTML = `
+      <p><strong>ID Pedido:</strong> ${pedido.id ?? '—'}</p>
+      <p><strong>Fecha:</strong> ${fechaStr}</p>
+      <p><strong>Estado:</strong> ${escapeHtml(estadoStr)}</p>
+      <p><strong>Total:</strong> S/ ${Number(totalNum).toFixed(2)}</p>
+    `;
+
+    // Mostrar productos
+    lista.innerHTML = '';
+    const items = Array.isArray(detalles) ? detalles : [];
+
+    if (items.length > 0) {
+      items.forEach(prod => {
+        // normalizar campos posibles
+        const nombre = prod.nombre || prod.nombre_producto || prod.title || 'Producto';
+        const cantidad = Number(prod.cantidad || prod.cantidad_producto || 1);
+        const precio = Number(prod.precio_unitario ?? prod.precio ?? prod.precio_producto ?? 0);
+        const mini = prod.miniatura || prod.imagen || prod.imagenes?.[0] || 'placeholder.png';
+
+        const item = document.createElement("div");
+        item.classList.add("producto-item");
+        item.innerHTML = `
+          <img src="${escapeAttr(mini)}" alt="${escapeAttr(nombre)}" onerror="this.src='placeholder.png'">
+          <div class="producto-detalle-texto">
+            <h3>${escapeHtml(nombre)}</h3>
+            <p>Cantidad: ${cantidad}</p>
+            <p>Precio unitario: S/ ${precio.toFixed(2)}</p>
+            <p>Subtotal: S/ ${(cantidad * precio).toFixed(2)}</p>
+          </div>
+        `;
+        lista.appendChild(item);
+      });
+    } else {
+      lista.innerHTML = "<p>No hay productos en este pedido.</p>";
+    }
+
+  } catch (error) {
+    console.error("Error al cargar pedido:", error);
+    infoCont.innerHTML = "<p>Error al cargar el pedido.</p>";
+    lista.innerHTML = "";
+  }
+
+  // helpers para escapar
+  function escapeHtml(text) {
+    return String(text)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+  }
+  function escapeAttr(text) {
+    return escapeHtml(text).replaceAll('"', '&quot;');
+  }
+});
+</script>
+
+</body>
+</html>

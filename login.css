@@ -1,0 +1,201 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  background-color: #ffffff;
+}
+
+header {
+  background-color: white;
+  color: #333;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  color: #daa520;
+  border-bottom: 2px solid #daa520;
+  background-color: white;
+  z-index: 1000;
+}
+
+.menu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+}
+
+.menu a {
+  margin: 0 15px;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.icon-cart {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.count-product {
+  position: absolute;
+  top: -2px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.cart-svg {
+  width: 24px;
+  height: 24px;
+  stroke: rgb(0, 0, 0);
+  
+}
+.login-svg {
+  width: 24px;
+  height: 24px;
+  stroke: rgb(0, 0, 0);
+}
+
+.texto-body{
+    text-align: center;
+}
+
+/* plantilla */
+
+.titulo-login{
+  text-align: center;
+  font-size: 40px;
+  
+}
+
+
+
+.contenedor-login {
+  width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.contenedor-login h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.campo {
+  margin-bottom: 15px;
+}
+
+.campo label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.campo input {
+  width: 500px !important;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.campo select{
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+
+button[type="submit"] {
+  width: 200px;
+  padding: 10px;
+  background-color: #000000 !important;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn{
+  text-align: center;
+  width: 200px;
+  display: inline-block;
+  padding: 10px;
+  background-color: #000000;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.contenedor-general{
+  display: flex; 
+}
+
+.contenedor-cliente {
+  width: 800px ;
+  margin: 40px auto;
+  margin-left: 3px !important;
+  padding: 20px;
+  background: rgba(155, 155, 155, 0.041);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.contenedor-cliente h2 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.campo {
+  margin-bottom: 15px;
+}
+
+.campo label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.campo input {
+  width: 100%;
+  height: 25px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.campo select{
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.usuario-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+}

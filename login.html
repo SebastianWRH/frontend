@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+      <header>
+    <nav class="nav">
+      <!-- Logo -->
+      <div class="marca">
+        <h1>AURORA</h1>
+      </div>
+      <!-- Menú -->
+      <div class="menu">
+        <a href="inicio.html">Inicio</a>
+        <a href="aretes.html">Catálogo</a>
+        <a href="#servicios">Contáctame</a>
+      </div>
+
+      <div class="acciones">
+
+
+        <!-- Login -->
+        <div class="usuario">
+          <i class="fas fa-user"></i>
+          <span id="nombre-usuario"></span>
+        </div>
+
+        <a href="#login">
+          <div class="icon-login">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="login-svg">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+
+          </div>
+        </a>
+        <!-- Carrito -->
+        <div class="icon-cart">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="cart-svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+          </svg>
+          <div class="count-product"><span id="contador-productos">0</span></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <h2 class="titulo-login">Iniciar Sesión</h2>
+  <section class="contenedor-general">
+  <main class="contenedor-login">
+    <form id="form-login">
+      <div class="campo">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" required>
+      </div>
+
+      <div class="campo">
+        <label for="contrasena">Contraseña</label>
+        <input type="password" id="contrasena" name="contrasena" required>
+      </div>
+     
+      <p id="mensaje-login" style="color: red;"></p>
+
+
+      <button type="submit">Iniciar Sesion</button>
+    </form>
+  </main>
+
+  <section class="contenedor-cliente">
+    <h2>¿Nuevo Cliente?</h2>
+    <form id="form-cliente">
+ 
+      <p id="mensaje" style="color: red;"></p>
+      <p>• Crea una cuenta para gozar de las siguientes ventajas: </p>
+      <p>• Pagar más rápido</p>
+      <p>• Guardar varias direcciones de envío</p>
+      <p>• Acceder a tu historial de pedidos</p>
+      <a href="registro.html" class="btn">Crear cuenta</a>
+      
+    </form>
+  </section>
+  </section>
+  <script src="login.js"></script>
+</body>
+</html>

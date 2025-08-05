@@ -1,0 +1,143 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  background-color: #ffffff;
+}
+
+header {
+  background-color: white;
+  color: #333;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  color: #daa520;
+  border-bottom: 2px solid #daa520;
+  background-color: white;
+  z-index: 1000;
+}
+
+.menu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+}
+
+.menu a {
+  margin: 0 15px;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.icon-cart {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.count-product {
+  position: absolute;
+  top: -2px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.cart-svg,
+.login-svg {
+  width: 24px;
+  height: 24px;
+  stroke: rgb(0, 0, 0);
+}
+
+.texto-body {
+  text-align: center;
+}
+
+/* ESTILOS REGISTRO */
+.registro-container {
+  max-width: 450px;
+  margin: 50px auto;
+  padding: 30px 25px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.registro-container h2 {
+  text-align: center;
+  color: #9C6B43;
+  margin-bottom: 25px;
+  font-size: 26px;
+}
+
+form#form-registro label {
+  display: block;
+  font-weight: 600;
+  margin: 15px 0 5px;
+}
+
+form#form-registro input,
+form#form-registro select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+form#form-registro input:focus,
+form#form-registro select:focus {
+  outline: none;
+  border-color: #9C6B43;
+}
+
+form#form-registro select {
+  background-color: #fff;
+}
+
+form#form-registro button[type="submit"] {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background-color: #9C6B43;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#form-registro button[type="submit"]:hover {
+  background-color: #7e5233;
+}
+
+#mensaje {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
