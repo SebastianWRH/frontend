@@ -205,3 +205,23 @@
     color: #daa520;
   }
 }
+
+
+@media (max-width: 768px) {
+  /* Evitar scroll horizontal en móvil */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Asegurar que la bienvenida no empuje el ancho */
+  .bienvenida {
+    max-width: 90%;
+    text-align: center;
+    white-space: normal; /* Permite que el texto se parta si es largo */
+  }
+
+  /* Evita que algún SVG o icono desborde */
+  svg {
+    max-width: 100%;
+  }
+}
