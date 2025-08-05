@@ -351,3 +351,88 @@ th {
 
 
 
+@media (max-width: 768px) {
+  /* Header compacto */
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .marca {
+    flex: 1;
+  }
+
+  /* Menú en una sola línea scrollable si no entra */
+  .menu {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .acciones {
+    flex: 1;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  /* Ajustar iconos */
+  .icon-cart, .icon-login {
+    width: 30px;
+    height: 30px;
+  }
+
+  .cart-svg, .login-svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Hero */
+  .hero {
+    flex-direction: column;
+    padding: 2rem;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .hero img {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* Productos */
+  .img-producto {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+  }
+
+  /* Carrito en móvil ocupa todo */
+  .carrito-slide {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .menu a {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  .btn-comprar {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
