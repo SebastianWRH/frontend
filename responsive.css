@@ -1,86 +1,108 @@
-/* responsive.css */
-
-/* --- Estilos generales para que todo se ajuste --- */
-* {
-  box-sizing: border-box;
+/* === Header móvil: marca centrada + hamburguesa izquierda + acciones derecha === */
+.hamburger {
+  display: none; /* oculto en desktop */
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+}
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #000;
+  margin: 4px 0;
+  transition: transform .2s ease, opacity .2s ease;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
+/* Desktop keeps existing menu layout */
+@media (max-width: 768px) {
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-/* --- Header --- */
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 10px 20px;
-}
-
-.menu {
-  display: flex;
-  gap: 15px;
-}
-
-.acciones {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* --- Adaptación para pantallas pequeñas --- */
-@media screen and (max-width: 768px) {
-  /* Menú en columna */
-  .menu {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    align-items: center;
-  }
-
-  /* Header en bloque */
   .nav {
-    flex-direction: column;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+    background: white;
+    border-bottom: 2px solid #daa520;
+    z-index: 1000;
   }
 
-  /* Ajustar acciones */
+  /* Show hamburger (left) */
+  .hamburger {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  /* Center the brand */
+  .marca {
+    flex: 1;
+    text-align: center;
+  }
+  .marca h1 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #daa520;
+    letter-spacing: 1px;
+  }
+
+  /* Actions to the right */
   .acciones {
-    flex-direction: column;
-    gap: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
   }
 
-  /* Productos en columna */
-  .contenedor-productos {
+  /* Menu: hidden panel by default */
+  .menu {
+    position: absolute;
+    left: 0;
+    top: 60px;
+    right: 0;
+    background: white;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    padding: 8px 12px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  }
-}
-
-/* --- Para móviles pequeños --- */
-@media screen and (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-
-  .nav h1 {
-    font-size: 20px;
+    gap: 6px;
+    transform: translateY(-10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .18s ease, opacity .18s ease;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 1050;
   }
 
   .menu a {
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+  }
+
+  /* When menu open (JS toggles .open) */
+  .menu.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Make header compact: reduce paddings */
+  .nav, .menu a, .acciones { 
     font-size: 14px;
   }
 
-  button {
-    padding: 8px 12px;
-    font-size: 14px;
-  }
+  /* reduce icon sizes */
+  .cart-svg, .login-svg { width: 20px; height: 20px; }
+  .icon-cart, .icon-login { width: 36px; height: 36px; }
+
 }
+
+
+
