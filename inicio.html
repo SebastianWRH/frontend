@@ -87,43 +87,50 @@
   <section class="productos">
     <h1>COMPRA POR CATEGORIA</h1>
     <p>El arte cerca de ti</p>
-    <nav class="pro-nav">
+<!-- Carrusel categorias -->
+<div class="carousel-wrapper">
+  <button class="carousel-btn prev" aria-label="Anterior">‹</button>
 
-      <div class="contenedor-imagen">
-        <a href="aretes.html?categoria=aretes">
-          <img src="productos/aretes-negros.png" alt="Aretes" class="img-producto" title="Ver Aretes">
-          <div class="overlay"></div>
-        </a>
-        <div class="texto-encima">
-          <h3>Aretes</h3>
-          <a href="aretes.html?categoria=aretes" class="btn-comprar">Ver Todo</a>
-        </div>
+  <nav class="pro-nav carousel-track">
+    <div class="contenedor-imagen">
+      <a href="aretes.html?categoria=aretes">
+        <img src="productos/aretes-negros.png" alt="Aretes" class="img-producto" title="Ver Aretes">
+        <div class="overlay"></div>
+      </a>
+      <div class="texto-encima">
+        <h3>Aretes</h3>
+        <a href="aretes.html?categoria=aretes" class="btn-comprar">Ver Todo</a>
       </div>
+    </div>
 
-
-      <div class="contenedor-imagen">
-        <a href="aretes.html?categoria=aretes">
-          <img src="productos/anillo1.jpg" alt="Anillos" class="img-producto" title="Ver Anillos">
-          <div class="overlay"></div>
-        </a>
-        <div class="texto-encima">
-          <h3>Anillos</h3>
-          <a href="aretes.html?categoria=anillos" class="btn-comprar">Ver Todo</a>
-        </div>
+    <div class="contenedor-imagen">
+      <a href="aretes.html?categoria=aretes">
+        <img src="productos/anillo1.jpg" alt="Anillos" class="img-producto" title="Ver Anillos">
+        <div class="overlay"></div>
+      </a>
+      <div class="texto-encima">
+        <h3>Anillos</h3>
+        <a href="aretes.html?categoria=anillos" class="btn-comprar">Ver Todo</a>
       </div>
+    </div>
 
-
-      <div class="contenedor-imagen">
-        <a href="aretes.html?categoria=pulseras">
-          <img src="productos/pulsera.png" alt="Pulseras" class="img-producto" title="Ver Pulseras">
-          <div class="overlay"></div>
-        </a>
-        <div class="texto-encima">
-          <h3>Pulseras</h3>
-          <a href="aretes.html?categoria=pulseras" class="btn-comprar">Ver Todo</a>
-        </div>
+    <div class="contenedor-imagen">
+      <a href="aretes.html?categoria=pulseras">
+        <img src="productos/pulsera.png" alt="Pulseras" class="img-producto" title="Ver Pulseras">
+        <div class="overlay"></div>
+      </a>
+      <div class="texto-encima">
+        <h3>Pulseras</h3>
+        <a href="aretes.html?categoria=pulseras" class="btn-comprar">Ver Todo</a>
       </div>
-    </nav>
+    </div>
+
+    <!-- agrega más .contenedor-imagen si las tienes -->
+  </nav>
+
+  <button class="carousel-btn next" aria-label="Siguiente">›</button>
+</div>
+
     <P>ㅤ</P>
     <P>ㅤ</P>
     <P>ㅤ</P>
@@ -138,6 +145,7 @@
   <script src="carrito-slide.js"></script>
 
   <script src="user-panel.js"></script>
+  <script src="carousel.js"></script>
 
 
 

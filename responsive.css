@@ -230,74 +230,80 @@
 
 
 
-/* ===== Uniformar tarjetas "Compra por categoría" SOLO en móvil ===== */
+/* ===== Carrusel móvil para .pro-nav ===== */
 @media (max-width: 768px) {
 
-  /* Grid: 1 columna en móvil (puedes cambiar a 2 con repeat(2,1fr) si quieres) */
-  .pro-nav {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 0 12px;
+  /* wrapper del carrusel */
+  .carousel-wrapper {
+    position: relative;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  /* Cada contenedor tiene relación de aspecto fija (cuadrada). */
-  .contenedor-imagen {
-    position: relative;
+  /* track: flex horizontal con scroll oculto */
+  .carousel-track {
+    display: flex;
+    gap: 12px;
+    overflow: hidden;            /* oculta el resto */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
     width: 100%;
-    aspect-ratio: 1 / 1;       /* cuadrado. Cambia a 4/3 para rectangular */
-    overflow: hidden;
+  }
+
+  /* Cada tarjeta ocupa la mayor parte del ancho (ajusta 82% si quieres más margen) */
+  .carousel-track .contenedor-imagen {
+    flex: 0 0 86%;
+    aspect-ratio: 1 / 1;         /* cuadrada; cambia si quieres otra relación */
     border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    scroll-snap-align: center;
     background: #f7f7f7;
   }
 
-  /* Imagen se adapta al contenedor, centrada y recortada si hace falta */
-  .contenedor-imagen img.img-producto {
+  .carousel-track .contenedor-imagen img.img-producto {
     width: 100%;
     height: 100%;
-    object-fit: cover;         /* mantiene proporción, recorta lo que sobra */
+    object-fit: cover;
     display: block;
-    object-position: center;   /* centra la parte visible */
   }
 
-  /* overlay semi-transparente igual tamaño */
-  .contenedor-imagen .overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.28) 100%);
-    pointer-events: none;
-  }
-
-  /* Texto encima centrado (o abajo) */
   .texto-encima {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%); /* centra vertical y horizontal */
+    transform: translate(-50%, -50%);
     z-index: 20;
     text-align: center;
     color: #fff;
-    padding: 8px;
     width: 90%;
   }
-  .texto-encima h3 {
-    margin: 0 0 6px 0;
-    font-size: 1.05rem;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.45);
-  }
-  .texto-encima .btn-comprar {
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.92);
-    color: #222;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 0.85rem;
-  }
 
-  /* Opcional: reducir márgenes/espaciado del resto */
-  .productos h1, .productos p {
-    padding: 0 12px;
+  /* Botones flecha */
+  .carousel-btn {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(0,0,0,0.06);
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 50;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    user-select: none;
+  }
+  .carousel-btn:disabled { opacity: 0.45; cursor: default; }
+
+  /* Ocultar botones en desktop (por si están presentes) */
+  @media (min-width: 769px) {
+    .carousel-btn { display: none; }
+    .carousel-track { overflow: visible; gap: 20px; }
+    .carousel-track .contenedor-imagen { flex: initial; width: auto; aspect-ratio: unset; }
   }
 }
+
