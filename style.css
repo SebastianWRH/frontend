@@ -336,31 +336,51 @@ h2 {
 
 
 
-/* === ESTILOS RESPONSIVE === */
-@media (max-width: 768px) {
 
-  /* Header */
+@media (max-width: 768px) {
+  /* Header compacto */
   .nav {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     padding: 10px;
   }
 
+  .marca {
+    flex: 1;
+  }
+
+  /* Menú en una sola línea scrollable si no entra */
   .menu {
     position: static;
     transform: none;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
     width: 100%;
   }
 
   .acciones {
-    margin-top: 10px;
+    flex: 1;
+    justify-content: flex-end;
     gap: 10px;
   }
 
-  /* Hero section */
+  /* Ajustar iconos */
+  .icon-cart, .icon-login {
+    width: 30px;
+    height: 30px;
+  }
+
+  .cart-svg, .login-svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Hero */
   .hero {
     flex-direction: column;
     padding: 2rem;
@@ -370,25 +390,22 @@ h2 {
 
   .hero img {
     width: 100%;
-    max-width: 300px;
-  }
-
-  .hero-text {
-    max-width: 100%;
+    max-width: 280px;
   }
 
   /* Productos */
   .img-producto {
     width: 100%;
-    max-width: 250px;
+    max-width: 220px;
     height: auto;
   }
 
-  /* Carrito */
+  /* Carrito en móvil ocupa todo */
   .carrito-slide {
     width: 100%;
   }
 }
+
 
 @media (max-width: 480px) {
   .menu a {
