@@ -5,9 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalle del Pedido</title>
   <link rel="stylesheet" href="detalle_pedido.css">
+  <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
+<header>
+  <nav class="nav">
+    <!-- Hamburguesa: izquierda (visible solo en móvil) -->
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
 
+    <!-- Marca centrada -->
+    <div class="marca">
+      <h1>AURORA</h1>
+    </div>
+
+    <!-- Acciones a la derecha -->
+<div class="acciones">
+        <!-- Login -->
+        <div class="usuario" id="usuario-menu">
+          <i class="fas fa-user"></i>
+          <div class="nombre-usuario-contenedor">
+            <p class="bienvenida">Bienvenido, <span id="nombre-usuario"></span></p>
+
+          </div>
+          <div class="icon-login" id="toggle-menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="login-svg">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+          </div>
+
+          <!-- Menú desplegable -->
+          <div class="menu-desplegable" id="menu-desplegable">
+            <a href="perfil.html">Perfil</a>
+            <a href="pedidos.html">Pedidos</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="#" id="cerrar-sesion">Cerrar sesión</a>
+          </div>
+        </div>
+        <!-- Carrito -->
+        <div class="icon-cart">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="cart-svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+          </svg>
+          <div class="count-product"><span id="contador-productos">0</span></div>
+        </div>
+      </div>
+    <!-- Menú (desktop visible; en móvil será panel desplegable) -->
+    <div class="menu" id="menu">
+      <a href="inicio.html">Inicio</a>
+      <a href="aretes.html">Catálogo</a>
+      <a href="contactame.html">Contáctame</a>
+    </div>
+
+    
+
+  </nav>
+
+
+</header>
   <div class="pedido-detalle-container">
     <h1>Detalle del Pedido</h1>
 
@@ -106,6 +168,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 </script>
+
+<script src="carrito-slide.js"></script>
+<script src="user-panel.js"></script>
 
 </body>
 </html>
