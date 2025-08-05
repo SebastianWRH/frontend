@@ -284,7 +284,7 @@
   /* Botones flecha en móvil */
   .carousel-btn {
     background: rgba(255, 255, 255, 0.95);
-    border: 5px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid rgb(0, 0, 0);
     width: 36px;
     height: 36px;
     border-radius: 999px;
@@ -294,7 +294,7 @@
     font-size: 20px;
     cursor: pointer;
     z-index: 50;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
     user-select: none;
   }
 
