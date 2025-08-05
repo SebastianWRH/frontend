@@ -106,3 +106,59 @@
 
 
 
+
+
+
+
+/* Por defecto (desktop): ocultar el mensaje de bienvenida aquí
+   para que NO interfiera con la versión de escritorio */
+.bienvenida {
+  display: none;
+}
+
+/* ===== Sólo en móvil: mostrar bienvenida debajo del logo y asegurar orden ===== */
+@media (max-width: 768px) {
+
+  /* Asegurar orden: hamburger - marca (centrada) - acciones */
+  .hamburger { order: 0; }
+  .marca     { order: 1; }
+  .acciones  { order: 2; }
+
+  /* Marca como columna para que el p.bienvenida quede debajo del h1 */
+  .marca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* centra el logo y el texto bajo él */
+    justify-content: center;
+    text-align: center;
+    flex: 1;               /* permite que el logo quede centrado entre hamburger y acciones */
+    gap: 4px;
+    position: relative;
+  }
+
+  /* Mostrar bienvenida sólo en móvil */
+  .marca .bienvenida {
+    display: block;
+    margin: 0;
+    font-size: 0.82rem;
+    color: #333;
+    line-height: 1;
+  }
+
+  /* Ajustes finos: reducir un poco el tamaño del logo si es necesario */
+  .marca h1 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #daa520;
+    letter-spacing: 1px;
+  }
+
+  /* Asegurar que hamburger y acciones no se estiren */
+  .hamburger, .acciones {
+    flex: 0 0 auto;
+  }
+
+  /* Mantener iconos compactos */
+  .icon-cart, .icon-login { width: 36px; height: 36px; display: inline-flex; align-items:center; justify-content:center; }
+
+}
