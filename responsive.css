@@ -1,0 +1,86 @@
+/* responsive.css */
+
+/* --- Estilos generales para que todo se ajuste --- */
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* --- Header --- */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+}
+
+.menu {
+  display: flex;
+  gap: 15px;
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- Adaptación para pantallas pequeñas --- */
+@media screen and (max-width: 768px) {
+  /* Menú en columna */
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+  }
+
+  /* Header en bloque */
+  .nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Ajustar acciones */
+  .acciones {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  /* Productos en columna */
+  .contenedor-productos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* --- Para móviles pequeños --- */
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .nav h1 {
+    font-size: 20px;
+  }
+
+  .menu a {
+    font-size: 14px;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
