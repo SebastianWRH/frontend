@@ -47,7 +47,7 @@
     isTouch = false;
     // Al terminar el swipe, determinamos el item más cercano al centro
     const center = track.scrollLeft + track.clientWidth / 2;
-    let closestIndex = -1;
+    let closestIndex = 0;
     let minDist = Infinity;
     items.forEach((it, idx) => {
       const itCenter = it.offsetLeft + it.clientWidth / 2;
