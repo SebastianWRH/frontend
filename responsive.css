@@ -110,55 +110,98 @@
 
 
 
-/* Por defecto (desktop): ocultar el mensaje de bienvenida aquí
-   para que NO interfiera con la versión de escritorio */
+/* ---------------------------
+   Bienvenida: visible en desktop (junto al icono),
+   y en móvil se mueve visualmente debajo del logo.
+   --------------------------- */
+
+/* --- Estilo por defecto (desktop) --- */
 .bienvenida {
-  display: none;
+  display: inline-block;
+  margin: 0;
+  margin-left: 6px;        /* separación respecto al icono de usuario */
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1;
+  position: static;        /* comportamiento normal en desktop */
 }
 
-/* ===== Sólo en móvil: mostrar bienvenida debajo del logo y asegurar orden ===== */
+/* Aseguramos que el contenedor del nav sea relativo para posicionados absolut. */
+.nav {
+  position: relative;
+}
+
+/* Alineamos el bloque usuario en desktop (junto al icono) */
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+/* --- Solo en móvil: mover el .bienvenida debajo del logo --- */
 @media (max-width: 768px) {
 
-  /* Asegurar orden: hamburger - marca (centrada) - acciones */
+  /* Mantén la estructura: hamburger - marca - acciones */
   .hamburger { order: 0; }
   .marca     { order: 1; }
   .acciones  { order: 2; }
 
-  /* Marca como columna para que el p.bienvenida quede debajo del h1 */
+  /* Asegura que el nav tiene suficiente alto para la posición */
+  .nav {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: auto; /* permitimos que el contenido crezca */
+  }
+
+  /* Centramos la marca como columna (logo + posible espacio) */
   .marca {
     display: flex;
     flex-direction: column;
-    align-items: center;   /* centra el logo y el texto bajo él */
+    align-items: center;
     justify-content: center;
     text-align: center;
-    flex: 1;               /* permite que el logo quede centrado entre hamburger y acciones */
     gap: 4px;
-    position: relative;
+    z-index: 30;
   }
 
-  /* Mostrar bienvenida sólo en móvil */
-  .marca .bienvenida {
-    display: block;
-    margin: 0;
+  /*
+    Movemos el elemento .bienvenida usando posicionamiento absoluto
+    y lo centramos horizontalmente respecto al nav.
+    IMPORTANTE: el elemento sigue en el DOM dentro de .usuario,
+    pero aquí lo situamos visualmente debajo del logo.
+  */
+  .bienvenida {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 6px);    /* 6px debajo del nav (ajusta si hace falta) */
+    width: max-content;
+    background: transparent;
     font-size: 0.82rem;
     color: #333;
-    line-height: 1;
+    z-index: 40;
+    white-space: nowrap;
   }
 
-  /* Ajustes finos: reducir un poco el tamaño del logo si es necesario */
+  /* Evita que el texto empuje el layout del .usuario en móvil */
+  .usuario {
+    /* seguimos mostrando solo el icono en la fila derecha */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+  }
+
+  /* Si quieres que el icono de usuario quede sin texto en móvil, dejamos espacio */
+  .usuario .nombre-usuario-contenedor {
+    display: none; /* si usas un contenedor extra para nombre, ocultarlo */
+  }
+
+  /* Ajustes de tamaño de logo y textos en móvil */
   .marca h1 {
-    margin: 0;
     font-size: 1.05rem;
+    margin: 0;
     color: #daa520;
-    letter-spacing: 1px;
   }
-
-  /* Asegurar que hamburger y acciones no se estiren */
-  .hamburger, .acciones {
-    flex: 0 0 auto;
-  }
-
-  /* Mantener iconos compactos */
-  .icon-cart, .icon-login { width: 36px; height: 36px; display: inline-flex; align-items:center; justify-content:center; }
-
 }
