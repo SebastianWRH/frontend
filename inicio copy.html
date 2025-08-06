@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Registrarse</title>
-  <link rel="stylesheet" href="registro.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURORA</title>
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="responsive.css">
 </head>
+
 <body>
+
   <header>
-      <nav class="nav">
+  <nav class="nav">
     <!-- Hamburguesa: izquierda (visible solo en móvil) -->
     <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
       <span class="hamburger-line"></span>
@@ -67,56 +70,87 @@
     
 
   </nav>
-  </header>
+</header>
 
-<main class="registro-container">
-    <h2>Registro de Usuario</h2>
-    <form id="form-registro">
-      <label for="nombre">Nombre completo:</label>
-      <input type="text" id="nombre" required>
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Impón tu estilo con nuestra bisutería artesanal única </h2>
+      <p>Sumérgete en el mundo de la elegancia natural. Cada pieza está hecha a mano con dedicación, cuidando cada
+        detalle para que expreses tu autenticidad con estilo.</p>
+      <p>Diseños atemporales, materiales nobles y ese toque artesanal que marca la diferencia.</p>
+      <p>No sigas modas. Llévalas puestas!</p>
+    </div>
+  </section>
 
-      <label for="correo">Correo electrónico:</label>
-      <input type="email" id="correo" required>
 
-      <label for="contrasena">Contraseña:</label>
-      <input type="password" id="contrasena" required>
 
-      <label for="confirmar">Confirmar contraseña:</label>
-      <input type="password" id="confirmar" required>
+  <section class="productos">
+    <h1>COMPRA POR CATEGORIA</h1>
+    <p>El arte cerca de ti</p>
+<!-- Carrusel categorias -->
+<div class="carousel-wrapper">
+  <button class="carousel-btn prev" aria-label="Anterior">‹</button>
 
-      <label for="celular">Celular:</label>
-      <input type="text" id="celular" required>
+  <nav class="pro-nav carousel-track">
+    <div class="contenedor-imagen">
+      <a href="aretes.html?categoria=aretes">
+        <img src="productos/aretes-negros.png" alt="Aretes" class="img-producto" title="Ver Aretes">
+        <div class="overlay"></div>
+      </a>
+      <div class="texto-encima">
+        <h3>Aretes</h3>
+        <a href="aretes.html?categoria=aretes" class="btn-comprar">Ver Todo</a>
+      </div>
+    </div>
 
-      <label for="departamento">Departamento:</label>
-      <input type="text" id="departamento" required>
+    <div class="contenedor-imagen">
+      <a href="aretes.html?categoria=aretes">
+        <img src="productos/anillo1.jpg" alt="Anillos" class="img-producto" title="Ver Anillos">
+        <div class="overlay"></div>
+      </a>
+      <div class="texto-encima">
+        <h3>Anillos</h3>
+        <a href="aretes.html?categoria=anillos" class="btn-comprar">Ver Todo</a>
+      </div>
+    </div>
 
-      <label for="provincia">Provincia:</label>
-      <input type="text" id="provincia" required>
+    <div class="contenedor-imagen">
+      <a href="aretes.html?categoria=pulseras">
+        <img src="productos/pulsera.png" alt="Pulseras" class="img-producto" title="Ver Pulseras">
+        <div class="overlay"></div>
+      </a>
+      <div class="texto-encima">
+        <h3>Pulseras</h3>
+        <a href="aretes.html?categoria=pulseras" class="btn-comprar">Ver Todo</a>
+      </div>
+    </div>
 
-      <label for="distrito">Distrito:</label>
-      <input type="text" id="distrito" required>
+    <!-- agrega más .contenedor-imagen si las tienes -->
+  </nav>
 
-      <label for="direccion">Dirección:</label>
-      <input type="text" id="direccion" required>
+  <button class="carousel-btn next" aria-label="Siguiente">›</button>
+</div>
 
-      <label for="tipo_documento">Tipo de documento:</label>
-      <select id="tipo_documento" required>
-        <option value="">Selecciona uno</option>
-        <option value="DNI">DNI</option>
-        <option value="Carnet de extranjería">Carnet de extranjería</option>
-        <option value="Pasaporte">Pasaporte</option>
-      </select>
+    <P>ㅤ</P>
+    <P>ㅤ</P>
+    <P>ㅤ</P>
 
-      <label for="numero_documento">Número de documento:</label>
-      <input type="text" id="numero_documento" required>
+    <h1>INFANTIL</h1>
+    <p>El arte cerca de ti</p>
+    <H1>Proximamente</H1>
 
-      <button type="submit">Registrarse</button>
-      <p id="mensaje" style="margin-top: 10px;"></p>
-    </form>
-  </main>
 
-  <script src="registro.js"></script>
-  <script src="panel-sesion.js"></script>
+  </section>
+
   <script src="carrito-slide.js"></script>
+
+  <script src="user-panel.js"></script>
+  <script src="carousel.js"></script>
+
+
+
+
+
 </body>
+
 </html>

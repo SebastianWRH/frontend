@@ -15,6 +15,14 @@ header {
   z-index: 1000;
 }
 
+.acciones{
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+}
+
 .nav {
   padding: 0 20px;
   display: flex;
@@ -47,6 +55,8 @@ header {
   width: 40px;
   height: 40px;
   cursor: pointer;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .count-product {
@@ -64,16 +74,147 @@ header {
   font-size: 12px;
 }
 
-.cart-svg,
+.cart-svg {
+  width: 24px;
+  height: 24px;
+  stroke: rgb(0, 0, 0);
+  
+}
 .login-svg {
   width: 24px;
   height: 24px;
   stroke: rgb(0, 0, 0);
 }
 
-.texto-body {
-  text-align: center;
+.texto-body{
+    text-align: center;
 }
+
+#cerrar-carrito {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.carrito-contenido {
+  padding: 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espacio entre íconos y texto */
+}
+
+
+
+.nombre-usuario-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 500;
+  color: #333;
+}
+
+.bienvenida {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #555;
+}
+
+
+.carrito-slide {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 350px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.carrito-slide.visible {
+  right: 0;
+}
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.carrito-header h3 {
+  margin: 0;
+}
+
+#cerrar-carrito {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.carrito-contenido {
+  padding: 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.menu-desplegable {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  flex-direction: column;
+  padding: 10px 0;
+  min-width: 150px;
+}
+
+.menu-desplegable a {
+  display: block;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.menu-desplegable a:hover {
+  background-color: #f0f0f0;
+}
+
+.usuario {
+  position: relative; /* Necesario para posicionar el menú */
+}
+
 
 /* ESTILOS REGISTRO */
 .registro-container {
@@ -140,4 +281,48 @@ form#form-registro button[type="submit"]:hover {
   text-align: center;
   margin-top: 15px;
   font-size: 14px;
+}
+
+
+
+
+
+/* ===== Registro centrado y adaptado en móvil ===== */
+@media (max-width: 768px) {
+  .registro-container {
+    width: 90%;                  /* deja espacio a los lados */
+    max-width: 400px;            /* evita que sea muy ancho */
+    margin: 20px auto;           /* centrado vertical y horizontal */
+    padding: 20px 15px;          /* menos padding en móvil */
+    box-sizing: border-box;      /* asegura que padding no rompa el ancho */
+  }
+
+  .registro-container h2 {
+    font-size: 22px;             /* título un poco más compacto */
+    margin-bottom: 20px;
+  }
+
+  form#form-registro label {
+    font-size: 14px;             /* etiquetas más pequeñas */
+  }
+
+  form#form-registro input,
+  form#form-registro select {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  form#form-registro button[type="submit"] {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
+
+
+/* Ajuste global para evitar desbordes */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
