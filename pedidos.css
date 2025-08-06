@@ -50,19 +50,30 @@ header {
   font-weight: bold;
 }
 
+
+.icon-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
 .icon-cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 40px;
   height: 40px;
   cursor: pointer;
-  margin-top: 0px;
-  margin-bottom: 0px;
 }
 
 .count-product {
   position: absolute;
-  top: -2px;
-  right: 10px;
+  top: 7px;
+  right: 1px;
   background-color: red;
   color: white;
   border-radius: 50%;
