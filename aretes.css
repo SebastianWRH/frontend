@@ -255,7 +255,34 @@ section {
   position: relative; /* Necesario para posicionar el menú */
 }
 
+/* Estilos base para aside (desktop por defecto) */
+.filtros {
+  width: 260px;
+  padding: 1rem;
+  background: #fff;
+  border-right: 1px solid #e6e6e6;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  position: relative;
+  transition: transform .28s ease, opacity .28s ease;
+}
 
+/* Cuando esté cerrado en desktop lo escondemos un poco (opcional) */
+.filtros[aria-hidden="true"] {
+  opacity: 0;
+  transform: translateX(-10px);
+  pointer-events: none;
+}
+
+/* Botón cerrar (visible solo en móvil) */
+.cerrar-filtros {
+  display: none;
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+}
 
 
 
@@ -423,20 +450,53 @@ section {
   }
 
   /* Off-canvas filtros: fuera del flujo y encima del contenido */
-  .filtros {
+   .filtros {
     position: fixed;
-    top: 0;
-    left: -320px;        /* fuera de pantalla por defecto */
-    width: 300px;
+    inset: 0;             /* top:0; right:0; bottom:0; left:0; */
+    width: 100%;
     height: 100%;
+    z-index: 1200;
+    transform: translateY(100%); /* fuera de pantalla abajo */
     background: #fff;
-    padding: 16px;
-    box-shadow: 2px 0 18px rgba(0,0,0,0.12);
-    transition: left 0.28s ease;
-    z-index: 1250;
     overflow-y: auto;
-    box-sizing: border-box;
+    padding: 1.5rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    opacity: 0;
+    transition: transform .28s ease, opacity .28s ease;
   }
+
+    /* Mostrar botón cerrar en móvil */
+  .cerrar-filtros {
+    display: block;
+  }
+
+
+  /* Cuando esté abierto */
+  .filtros.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Detrás del overlay: un backdrop semitransparente */
+  .filtros-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1100;
+    opacity: 0;
+    transition: opacity .2s ease;
+    pointer-events: none;
+  }
+  .filtros-backdrop.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Ocultar el aside inline (sidebar) en mobile cuando no abierto */
+  .contenedor-principal {
+    display: block; /* tu layout se mantiene, pero aside está overlay */
+  }
+
   .filtros.abierto { left: 0; }
 
   /* Overlay cuando el panel está abierto */
@@ -502,3 +562,7 @@ section {
     -webkit-line-clamp: 2; /* máximo 2 líneas */
     -webkit-box-orient: vertical;
   }
+
+
+
+  
