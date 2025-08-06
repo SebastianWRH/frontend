@@ -351,3 +351,114 @@ section {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== LAYOUT: Desktop / Tablet (>= 769px) ===== */
+@media (min-width: 769px) {
+  .contenedor-principal {
+    display: grid;
+    grid-template-columns: 260px 1fr; /* filtros a la izquierda, catálogo a la derecha */
+    gap: 24px;
+    align-items: start;
+    padding: 20px;
+  }
+
+  .filtros {
+    display: block;
+    position: static;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    transform: none;
+    transition: none;
+    padding: 0;
+    background: transparent;
+  }
+
+  /* Oculta el botón de filtros en desktop */
+  .btn-filtros { display: none; }
+}
+
+/* ===== MÓVIL: filtros como panel off-canvas ===== */
+@media (max-width: 768px) {
+
+  /* ponemos la grid simple: catálogo full width */
+  .contenedor-principal {
+    display: block;
+    padding: 8px;
+  }
+
+  /* botón visible en móvil */
+  .btn-filtros {
+    display: inline-block;
+    margin: 8px 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #daa520;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  /* panel oculto fuera del viewport (left) */
+  .filtros {
+    position: fixed;
+    left: -320px;            /* fuera de pantalla */
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.12);
+    padding: 18px;
+    box-sizing: border-box;
+    transition: left 0.28s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  .filtros.abierto {
+    left: 0; /* aparece */
+  }
+
+  /* Un overlay semitransparente cuando el panel esté abierto */
+  .filtros-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 999;
+    display: none;
+  }
+  .filtros-overlay.visible { display: block; }
+
+  /* Ajustes de catálogo en móvil (cards centradas y adaptables) */
+  .productoholder {
+    /* si usas un wrapper, si no, el .catalogo ya está ok */
+  }
+
+  .producto {
+    width: calc(50% - 16px); /* 2 por fila en móviles, ajústalo a 100% para 1 por fila */
+  }
+
+  .producto img.img-producto {
+    height: 140px;
+  }
+}

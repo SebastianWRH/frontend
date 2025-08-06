@@ -77,7 +77,11 @@
 </div>
 
 <div class="contenedor-principal">
+  
   <aside class="filtros">
+    <!-- botón visible SOLO en móvil para abrir filtros -->
+    
+
     <h3>Filtrar por:</h3>
     <div>
       <h4>Categoría</h4>
@@ -92,7 +96,7 @@
       <input type="range" min="0" max="200" value="200" id="filtro-precio">
     </div>
   </aside>
-
+  <button class="btn-filtros" id="btn-filtros" aria-controls="filtros" aria-expanded="false">Filtros</button>
   <div id="catalogo" class="catalogo"></div>
 </div>
 
