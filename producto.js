@@ -46,17 +46,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             <input type="number" id="cantidad" value="1" min="1" max="10">
           </div>
 
-
-          
           <div class="opcion-compra">
-          <button class="btn-agregar">Agregar al carrito</button>
-          <div class="icon-fav" id="toggle-menu" data-producto-id="${producto.id}">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-          </svg>
+            <button class="btn-agregar">Agregar al carrito</button>
+            <div class="icon-fav" id="toggle-menu" data-producto-id="${producto.id}">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+              </svg>
+            </div>
           </div>
-          </div>
-
 
           <div class="tabs-producto">
             <div class="tab-buttons">
@@ -76,19 +73,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       </div>
     `;
 
+    const btnAgregar = document.querySelector(".btn-agregar");
+    if (producto.stock <= 0) {
+      btnAgregar.disabled = true;
+      btnAgregar.textContent = "Sin stock";
+      btnAgregar.style.backgroundColor = "#aaa";
+    }
 
-
-
-
-const btnAgregar = document.querySelector(".btn-agregar");
-if (producto.stock <= 0) {
-  btnAgregar.disabled = true;
-  btnAgregar.textContent = "Sin stock";
-  btnAgregar.style.backgroundColor = "#aaa"; // opcional: cambia el color
-}
-
-
-        
     // --- Zoom
     const img = document.getElementById("img-principal");
     const zoomContainer = document.querySelector(".zoom-container");
@@ -125,17 +116,24 @@ if (producto.stock <= 0) {
       event.currentTarget.classList.add('active');
     };
 
-    // --- Agregar al carrito
-    document.querySelector(".btn-agregar").addEventListener("click", () => {
+    // --- Agregar al carrito (con verificación de sesión)
+    document.querySelector(".btn-agregar").addEventListener("click", (e) => {
+      const usuarioSesion = JSON.parse(localStorage.getItem('usuario'));
+      if (!usuarioSesion) {
+        e.preventDefault();
+        alert('Debes iniciar sesión para agregar productos al carrito.');
+        const returnUrl = encodeURIComponent(window.location.href);
+        window.location.href = `login.html?next=${returnUrl}`;
+        return;
+      }
+
       const cantidad = parseInt(document.getElementById("cantidad").value);
 
-      // Validar color
       if (!colorSeleccionado) {
         alert("Por favor selecciona un color antes de continuar.");
         return;
       }
 
-      // Validar cantidad
       if (isNaN(cantidad) || cantidad < 1 || cantidad > 10) {
         alert("Por favor ingresa una cantidad válida (mínimo 1, máximo 10).");
         return;
@@ -155,7 +153,6 @@ if (producto.stock <= 0) {
       document.getElementById("carrito-slide").classList.add("abierto");
     });
 
-
     function agregarAlCarrito(productoNuevo) {
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
       const index = carrito.findIndex(item => item.id === productoNuevo.id && item.color === productoNuevo.color);
@@ -167,9 +164,7 @@ if (producto.stock <= 0) {
           return;
         }
         carrito[index].cantidad = nuevaCantidad;
-      }
-      
-      else {
+      } else {
         carrito.push(productoNuevo);
       }
 
@@ -227,14 +222,10 @@ if (producto.stock <= 0) {
     // Cambiar imagen principal
     window.cambiarImagen = function (nuevaSrc) {
       const imgPrincipal = document.getElementById("img-principal");
-
-      // Guardar el src actual de la imagen principal
       const anteriorSrc = imgPrincipal.src;
       imgPrincipal.src = nuevaSrc;
 
-      // Buscar la miniatura que se hizo clic y cambiarle el src por el anterior
       const miniaturas = document.querySelectorAll(".miniatura");
-
       miniaturas.forEach(mini => {
         if (mini.src === nuevaSrc) {
           mini.src = anteriorSrc;
@@ -247,130 +238,107 @@ if (producto.stock <= 0) {
     document.getElementById("detalle-producto").innerHTML = `<p>Error al cargar el producto.</p>`;
   }
 
+  // --- Sistema de favoritos ---
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
 
-
-// --- Sistema de favoritos ---
-const usuario = JSON.parse(localStorage.getItem("usuario"));
-
-if (!usuario) {
-  // Si no hay sesión, cualquier estrella solo avisa
-  document.querySelectorAll('.icon-fav').forEach(btn => {
-    btn.addEventListener('click', () => {
-      alert("Debes iniciar sesión para agregar a favoritos.");
+  if (!usuario) {
+    document.querySelectorAll('.icon-fav').forEach(btn => {
+      btn.addEventListener('click', () => {
+        alert("Debes iniciar sesión para agregar a favoritos.");
+      });
     });
-  });
-} else {
-  const userId = usuario.id;
+  } else {
+    const userId = usuario.id;
 
-  // Helper: obtiene favoritos actuales del usuario (devuelve array de productos)
-  async function obtenerFavoritos() {
-    try {
-      const res = await fetch(`https://aurora-backend-ve7u.onrender.com/favoritos/${userId}`);
-      if (!res.ok) throw new Error("Error al obtener favoritos");
-      return await res.json(); // array de productos
-    } catch (e) {
-      console.error("Fallo al cargar favoritos:", e);
-      return [];
-    }
-  }
-
-  // Para cada ícono de favorito en la página
-  document.querySelectorAll('.icon-fav').forEach(async (btn) => {
-    const productoId = btn.dataset.productoId;
-    if (!productoId) {
-      console.warn("icon-fav sin data-producto-id:", btn);
-      return;
-    }
-
-    let esFavorito = false;
-    let bloqueado = false; // para evitar doble click mientras se procesa
-
-    // Inicializar estado
-    const favoritos = await obtenerFavoritos();
-    esFavorito = favoritos.some(fav => String(fav.id) === String(productoId));
-    actualizarIcono();
-
-    function actualizarIcono() {
-      btn.classList.toggle("activo", esFavorito);
-      btn.style.color = esFavorito ? "black" : "black";
-      // opcional: cambiar el fill del SVG si quieres
-    }
-
-    async function agregarAFavoritos() {
-      if (bloqueado) return;
-      bloqueado = true;
+    async function obtenerFavoritos() {
       try {
-        const res = await fetch("https://aurora-backend-ve7u.onrender.com/favoritos", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id_usuario: userId,
-            id_producto: productoId
-          })
-        });
+        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/favoritos/${userId}`);
+        if (!res.ok) throw new Error("Error al obtener favoritos");
+        return await res.json();
+      } catch (e) {
+        console.error("Fallo al cargar favoritos:", e);
+        return [];
+      }
+    }
 
-        const data = await res.json();
-        if (!res.ok) {
-          if (res.status === 400 && data.mensaje && data.mensaje.toLowerCase().includes("ya está")) {
-            // ya era favorito, sincronizamos
-            esFavorito = true;
+    document.querySelectorAll('.icon-fav').forEach(async (btn) => {
+      const productoId = btn.dataset.productoId;
+      if (!productoId) return;
+
+      let esFavorito = false;
+      let bloqueado = false;
+
+      const favoritos = await obtenerFavoritos();
+      esFavorito = favoritos.some(fav => String(fav.id) === String(productoId));
+      actualizarIcono();
+
+      function actualizarIcono() {
+        btn.classList.toggle("activo", esFavorito);
+        btn.style.color = esFavorito ? "black" : "black";
+      }
+
+      async function agregarAFavoritos() {
+        if (bloqueado) return;
+        bloqueado = true;
+        try {
+          const res = await fetch("https://aurora-backend-ve7u.onrender.com/favoritos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id_usuario: userId, id_producto: productoId })
+          });
+
+          const data = await res.json();
+          if (!res.ok) {
+            if (res.status === 400 && data.mensaje && data.mensaje.toLowerCase().includes("ya está")) {
+              esFavorito = true;
+            } else {
+              throw new Error(data.mensaje || "Error al agregar favorito");
+            }
           } else {
-            throw new Error(data.mensaje || "Error al agregar favorito");
+            esFavorito = true;
           }
+          actualizarIcono();
+          alert("Producto agregado a favoritos.");
+        } catch (e) {
+          console.error("Error agregando favorito:", e);
+          alert("No se pudo agregar a favoritos.");
+        } finally {
+          bloqueado = false;
+        }
+      }
+
+      async function quitarDeFavoritos() {
+        if (bloqueado) return;
+        bloqueado = true;
+        try {
+          const res = await fetch("https://aurora-backend-ve7u.onrender.com/favoritos", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id_usuario: userId, id_producto: productoId })
+          });
+
+          const data = await res.json();
+          if (!res.ok) {
+            throw new Error(data.mensaje || "Error al eliminar favorito");
+          }
+          esFavorito = false;
+          actualizarIcono();
+          alert("Producto eliminado de favoritos.");
+        } catch (e) {
+          console.error("Error quitando favorito:", e);
+          alert("No se pudo eliminar de favoritos.");
+        } finally {
+          bloqueado = false;
+        }
+      }
+
+      btn.addEventListener("click", () => {
+        if (esFavorito) {
+          quitarDeFavoritos();
         } else {
-          esFavorito = true;
+          agregarAFavoritos();
         }
-        actualizarIcono();
-        // podrías mostrar un toast en vez de alert
-        alert("Producto agregado a favoritos.");
-      } catch (e) {
-        console.error("Error agregando favorito:", e);
-        alert("No se pudo agregar a favoritos.");
-      } finally {
-        bloqueado = false;
-      }
-    }
-
-    async function quitarDeFavoritos() {
-      if (bloqueado) return;
-      bloqueado = true;
-      try {
-        const res = await fetch("https://aurora-backend-ve7u.onrender.com/favoritos", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id_usuario: userId,
-            id_producto: productoId
-          })
-        });
-
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.mensaje || "Error al eliminar favorito");
-        }
-        esFavorito = false;
-        actualizarIcono();
-        alert("Producto eliminado de favoritos.");
-      } catch (e) {
-        console.error("Error quitando favorito:", e);
-        alert("No se pudo eliminar de favoritos.");
-      } finally {
-        bloqueado = false;
-      }
-    }
-
-    // Click handler
-    btn.addEventListener("click", () => {
-      if (esFavorito) {
-        quitarDeFavoritos();
-      } else {
-        agregarAFavoritos();
-      }
+      });
     });
-  });
-}
-
+  }
 });
-
-
-
