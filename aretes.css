@@ -281,10 +281,18 @@ section {
   top: 10px;
   border: none;
   background: transparent;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333; /* color visible */
+  z-index: 1300; /* encima de todo dentro del panel */
 }
 
 
+@media (max-width: 768px) {
+  .cerrar-filtros {
+    display: block; /* se muestra en móvil */
+  }
+}
 
 
 
@@ -445,7 +453,7 @@ section {
     border-radius: 8px;
     border: 1px solid rgba(0,0,0,0.06);
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    z-index: 1300;
+    z-index: 1100;
     position: relative; /* no sticky (evita que empuje) */
   }
 
@@ -548,8 +556,6 @@ section {
     font-size: 0.9rem;
     color: #444;
   }
-}
-
   .producto h3 {
     margin: 8px 0 4px;
     font-size: 0.95rem;
@@ -563,6 +569,4 @@ section {
     -webkit-box-orient: vertical;
   }
 
-
-
-  
+}
