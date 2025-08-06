@@ -397,65 +397,112 @@ section {
   .btn-filtros { display: none; }
 }
 
-/* ===== Ajustes SOLO para móvil: 2 columnas + filtro arriba-izquierda ===== */
+/* ===== MÓVIL: filtros como hamburguesa + 2 productos por fila llenando ancho ===== */
 @media (max-width: 768px) {
-  /* contenedor principal: comportamiento de bloque para móvil */
-  .contenedor-principal {
-    display: block;
-    padding: 12px;
-    box-sizing: border-box;
-  }
 
-  /* Mostrar filtros como una barra/caja pequeña arriba-izquierda */
-  .filtros {
-    display: block;
-    width: auto;
-    max-width: 46%;          /* ocupa ~la mitad del ancho, se ve a la izquierda */
-    margin: 0 0 10px 12px;   /* separa del borde y del catálogo */
+  /* Botón hamburguesa visible en móvil (arriba a la izquierda) */
+  .btn-filtros {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: sticky;
+    top: 8px;
+    left: 8px;
+    z-index: 1100;
+    margin: 8px 0 12px 12px;
+    padding: 8px 10px;
     background: #fff;
     border-radius: 8px;
-    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.06);
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    font-weight: 600;
   }
 
-  /* Si quieres que el filtro sea aún más pequeño: reduce max-width a 36% */
+  /* Off-canvas filtros: oculto por defecto a la izquierda */
+  .filtros {
+    position: fixed;
+    top: 0;
+    left: -320px;        /* fuera de pantalla */
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    padding: 16px;
+    box-shadow: 2px 0 18px rgba(0,0,0,0.12);
+    transition: left 0.28s ease;
+    z-index: 1200;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  .filtros.abierto {
+    left: 0;
+  }
 
-  /* Catálogo: 2 productos por fila */
+  /* Overlay cuando el panel está abierto */
+  .filtros-overlay {
+    display: none;
+  }
+  .filtros-overlay.visible {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 1150;
+  }
+
+  /* Catalogo: 2 columnas con productos que ocupan toda la pantalla (2x50% menos márgenes) */
   .catalogo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    justify-items: center; /* centra el contenido de cada celda */
-    padding: 0 12px 18px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;            /* quitamos paddings extra para conseguir anchura completa */
+    padding: 0 6px 18px 6px;
     box-sizing: border-box;
   }
 
-  /* Cada card se adapta al ancho de la columna y centra su contenido */
+  /* Cada producto: 50% ancho menos márgenes (5px cada lado) => calc(50% - 10px) */
   .producto {
-    width: 100%;
-    max-width: 280px;        /* limita ancho de la card si la pantalla es ancha */
-    text-align: center;
     box-sizing: border-box;
+    width: calc(50% - 10px); /* dos por fila */
+    margin: 5px;             /* 5px por todos lados */
+    background: transparent;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  /* Imagen uniforme (misma altura) */
+  /* Imagen: ocupa el ancho de la tarjeta y altura fija para uniformidad */
   .producto img.img-producto {
     width: 100%;
-    height: 160px;          /* ajusta altura para tu diseño */
-    object-fit: cover;
+    height: 160px;       /* altura uniforme (ajústala si quieres) */
+    object-fit: cover;   /* recorta sin deformar */
     border-radius: 8px;
     display: block;
   }
 
-  /* Si hay mucho texto, el título y precio se ajustan */
-  .producto h3 { font-size: 0.95rem; margin: 8px 0 4px; }
-  .producto p { margin: 0; font-size: 0.9rem; }
-
-  /* Si quieres que la caja de filtros no empuje el grid al bajar de ancho,
-     aplica un break para pantallas muy pequenas */
-  @media (max-width: 420px) {
-    .filtros { max-width: 100%; margin-left: 0  ; } /* filtro arriba a full width en pantallas muy pequeñas */
-    .catalogo { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .producto img.img-producto { height: 140px; }
+  /* Nombre y precio debajo de la imagen */
+  .producto h3 {
+    margin: 8px 0 4px 0;
+    font-size: 0.95rem;
+    color: #222;
+    line-height: 1.1;
   }
+  .producto p {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  /* Ajuste para pantallas muy pequeñas (opcional: reduce altura e texto) */
+  @media (max-width: 360px) {
+    .producto img.img-producto { height: 140px; }
+    .producto h3 { font-size: 0.9rem; }
+    .producto p { font-size: 0.85rem; }
+  }
+
+}
+
+/* ===== En desktop ocultamos el botón de filtros y dejamos aside visible como ahora ===== */
+@media (min-width: 769px) {
+  .btn-filtros { display: none; }
+  .filtros { position: static; left: auto; width: auto; height: auto; box-shadow: none; padding: 0; }
 }

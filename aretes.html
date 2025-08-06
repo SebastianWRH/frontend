@@ -96,7 +96,11 @@
       <input type="range" min="0" max="200" value="200" id="filtro-precio">
     </div>
   </aside>
-  <button class="btn-filtros" id="btn-filtros" aria-controls="filtros" aria-expanded="false">Filtros</button>
+    <!-- Botón hamburguesa SOLO en móvil para abrir filtros -->
+  <button id="btn-filtros" class="btn-filtros" aria-controls="filtros" aria-expanded="false" aria-label="Abrir filtros">
+    ☰ Filtrar
+  </button>
+
   <div id="catalogo" class="catalogo"></div>
 </div>
 
