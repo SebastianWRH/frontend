@@ -110,13 +110,12 @@ section {
 
 
 /* Miniaturas */
-.miniaturas {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
+  .miniaturas {
+    display: flex;
+    flex-direction: column; /* Miniaturas en columna */
+    gap: 10px;
+    margin-top: 0; /* Quitamos margen extra */
+  }
 
 .miniatura {
   width: 80px;
@@ -173,22 +172,24 @@ section {
 
 .columna-imagenes {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 15px;
 }
 /* zoom producto */
 .zoom-container {
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 702px;
-  height: 1202px;
+  max-width: 700px;
+  height: 700px;
+  border-radius: 10px;
 
 }
 /* Imagen principal */
 .img-detalle {
   width: 700px; /* o 800px si prefieres más grande */
-  height: 1200px;
+  height: 700;
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
