@@ -273,33 +273,22 @@ section {
   pointer-events: none;
 }
 
-/* Botón cerrar (visible solo en móvil) */
 .cerrar-filtros {
-  display: none;
-  position: absolute;
-  right: 12px;
-  top: 10px;
-  border: none;
-  background: transparent;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #333; /* color visible */
-  z-index: 1300; /* encima de todo dentro del panel */
+    display: none;
 }
 
 
+
 @media (max-width: 768px) {
+    /* Botón cerrar (visible solo en móvil) */
   .cerrar-filtros {
-    display: block; /* se muestra en móvil */
+    display: block;
+    background: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333; /* color visible */
+    z-index: 1300; /* encima de todo dentro del panel */
   }
-}
-
-
-
-
-
-
-@media (max-width: 768px) {
   /* Header compacto */
   .nav {
     flex-direction: row;
@@ -472,13 +461,6 @@ section {
     opacity: 0;
     transition: transform .28s ease, opacity .28s ease;
   }
-
-    /* Mostrar botón cerrar en móvil */
-  .cerrar-filtros {
-    display: block;
-  }
-
-
   /* Cuando esté abierto */
   .filtros.open {
     transform: translateY(0);
@@ -570,3 +552,6 @@ section {
   }
 
 }
+
+
+
