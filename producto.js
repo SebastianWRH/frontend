@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           <div class="cantidad-producto">
             <p class="cantidad"><strong>Cantidad:</strong></p>
-            <p><strong>Stock disponible:</strong> <span id="stock-disponible">${producto.stock}</span></p>
             <input type="number" id="cantidad" value="1" min="1" max="10">
+            <p><strong>Stock disponible:</strong> <span id="stock-disponible">${producto.stock}</span></p>
           </div>
 
           <div class="opcion-compra">

@@ -547,7 +547,6 @@ section {
     max-height: 2.4em; /* limita a 2 líneas */
     overflow: hidden; /* oculta lo que exceda */
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* máximo 2 líneas */
     -webkit-box-orient: vertical;
   }
 

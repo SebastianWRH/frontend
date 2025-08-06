@@ -589,3 +589,41 @@ display: flex;
 
 
 
+@media (max-width: 768px) {
+  /* Contenedor general en columna y centrado */
+  .producto-detalle {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+    padding: 15px;
+    gap: 20px;
+  }
+
+  /* Imagen principal adaptativa */
+  .zoom-container {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .img-detalle {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+  }
+
+  /* Botón ocupar todo el ancho */
+  .btn-agregar {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Centrar la info debajo de la imagen */
+  .info-detalle {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .miniaturas {
+    justify-content: center;
+  }
+}
