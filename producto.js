@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!res.ok) throw new Error("Producto no encontrado");
     const producto = await res.json();
 
-    document.title = `${producto.nombre} - Aurora Store`;
+    document.title = `${producto.nombre.toUpperCase()} - Aurora Store`;
     
     const contenedor = document.getElementById("detalle-producto");
 
