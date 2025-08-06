@@ -90,12 +90,58 @@ header {
     text-align: center;
 }
 
+.carrito-slide {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 350px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.carrito-slide.visible {
+  right: 0;
+}
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.carrito-header h3 {
+  margin: 0;
+}
+
 #cerrar-carrito {
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
 }
+
+.carrito-contenido {
+  padding: 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+
+
 
 .carrito-contenido {
   padding: 1rem;
