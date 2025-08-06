@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const res = await fetch(`https://aurora-backend-ve7u.onrender.com/producto/${id}`);
     if (!res.ok) throw new Error("Producto no encontrado");
     const producto = await res.json();
+
+    document.title = `${producto.nombre} - Aurora Store`;
     
     const contenedor = document.getElementById("detalle-producto");
 
@@ -342,3 +344,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 });
+
