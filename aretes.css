@@ -371,6 +371,32 @@ section {
 
 
 
+/* ===== LAYOUT: Desktop / Tablet (>= 769px) ===== */
+@media (min-width: 769px) {
+  .contenedor-principal {
+    display: grid;
+    grid-template-columns: 260px 1fr; /* filtros a la izquierda, catálogo a la derecha */
+    gap: 24px;
+    align-items: start;
+    padding: 20px;
+  }
+
+  .filtros {
+    display: block;
+    position: static;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    transform: none;
+    transition: none;
+    padding: 0;
+    background: transparent;
+  }
+
+  /* Oculta el botón de filtros en desktop */
+  .btn-filtros { display: none; }
+}
+
 /* ===== Ajustes SOLO para móvil: 2 columnas + filtro arriba-izquierda ===== */
 @media (max-width: 768px) {
   /* contenedor principal: comportamiento de bloque para móvil */
