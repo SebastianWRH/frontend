@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contáctame</title>
-    <link rel="stylesheet" href="contactame.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contactame</title>
+  <link rel="stylesheet" href="contactame.css">
+  <link rel="stylesheet" href="responsive.css">
 </head>
+
 <body>
   <header>
     <nav class="nav">
-      <!-- Logo -->
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
       <div class="marca">
         <h1>AURORA</h1>
       </div>
-      <!-- Menú -->
-      <div class="menu">
-        <a href="inicio.html">Inicio</a>
-        <a href="aretes.html">Catálogo</a>
-        <a href="#servicios">Contáctame</a>
-      </div>
-
-
-
       <div class="acciones">
-        <!-- Login -->
         <div class="usuario" id="usuario-menu">
           <i class="fas fa-user"></i>
           <div class="nombre-usuario-contenedor">
-          <p class="bienvenida">Bienvenido, <span id="nombre-usuario"></span></p>
+            <p class="bienvenida">Bienvenido, <span id="nombre-usuario"></span></p>
 
           </div>
           <div class="icon-login" id="toggle-menu">
@@ -37,8 +34,6 @@
                 d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
             </svg>
           </div>
-
-          <!-- Menú desplegable -->
           <div class="menu-desplegable" id="menu-desplegable">
             <a href="perfil.html">Perfil</a>
             <a href="pedidos.html">Pedidos</a>
@@ -46,7 +41,6 @@
             <a href="#" id="cerrar-sesion">Cerrar sesión</a>
           </div>
         </div>
-        <!-- Carrito -->
         <div class="icon-cart">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="cart-svg">
@@ -56,39 +50,17 @@
           <div class="count-product"><span id="contador-productos">0</span></div>
         </div>
       </div>
+      <div class="menu" id="menu">
+        <a href="inicio.html">Inicio</a>
+        <a href="aretes.html">Catálogo</a>
+        <a href="contactame.html">Contáctame</a>
+      </div>
+
     </nav>
   </header>
 
-    <main>
-        <section class="contact-form">
-            <h2>Envíame un mensaje</h2>
-            <form action="#" method="post">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-
-                <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo" required>
-
-                <label for="asunto">Asunto:</label>
-                <input type="text" id="asunto" name="asunto" required>
-
-                <label for="mensaje">Mensaje:</label>
-                <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-
-                <button type="submit">Enviar</button>
-            </form>
-        </section>
-    </main>
-
-    <script src="carrito-slide.js"></script>
-    <script src="user-panel.js"></script>
-    
-    <footer>
-        <p>© 2025 Tu Nombre - Todos los derechos reservados</p>
-    </footer>
-
-
-
-
+  <script src="carrito-slide.js"></script>
+  <script src="panel-sesion.js"></script>
 </body>
+
 </html>

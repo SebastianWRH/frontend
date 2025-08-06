@@ -40,9 +40,8 @@ header {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 30px;
+  gap: 0px;
 }
-
 .menu a {
   margin: 0 15px;
   color: rgb(0, 0, 0);
@@ -90,6 +89,87 @@ header {
     text-align: center;
 }
 
+.carrito-slide {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 350px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.carrito-slide.abierto {
+  right: 0;
+}
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.carrito-header h3 {
+  margin: 0;
+}
+
+#cerrar-carrito {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.carrito-contenido {
+  padding: 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.carrito-slide {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 350px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.carrito-slide.visible {
+  right: 0;
+}
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.carrito-header h3 {
+  margin: 0;
+}
+
 #cerrar-carrito {
   background: none;
   border: none;
@@ -109,7 +189,6 @@ header {
   gap: 10px;
   margin-bottom: 1rem;
 }
-
 .usuario {
   display: flex;
   align-items: center;
@@ -164,6 +243,13 @@ header {
   position: relative; /* Necesario para posicionar el menú */
 }
 
+.acciones{
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+}
 
 
 
@@ -172,82 +258,110 @@ header {
 
 
 
-/* Formulario */
-.contact-form {
-    background: white;
-    max-width: 500px;
-    margin: 2rem auto;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  /* Header compacto */
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .marca {
+    flex: 1;
+  }
+
+  /* Menú en una sola línea scrollable si no entra */
+  .menu {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .acciones {
+    flex: 1;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  /* Ajustar iconos */
+  .icon-cart, .icon-login {
+    width: 30px;
+    height: 30px;
+  }
+
+  .cart-svg, .login-svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Hero */
+  .hero {
+    flex-direction: column;
     padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.contact-form h2 {
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-label {
-    display: block;
-    margin-top: 1rem;
-    font-weight: bold;
-    color: #555;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 0.8rem;
-    margin-top: 0.3rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-textarea {
-    resize: none;
-}
-
-/* Botón */
-button {
-    margin-top: 1.5rem;
-    width: 100%;
-    padding: 0.8rem;
-    background: #27ae60;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background: #219150;
-}
-
-/* Footer */
-footer {
-    background: #2c3e50;
-    color: white;
+    gap: 20px;
     text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+  }
+
+  .hero img {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* Productos */
+  .img-producto {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+  }
+
+  /* Carrito en móvil ocupa todo */
+  .carrito-slide {
+    width: 100%;
+  }
 }
 
-/* Responsivo */
-@media (max-width: 600px) {
-    .contact-form {
-        margin: 1rem;
-        padding: 1.5rem;
-    }
+
+@media (max-width: 480px) {
+  .menu a {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  .btn-comprar {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
 }
-
-
-
-
-
-
-
-
-
-
