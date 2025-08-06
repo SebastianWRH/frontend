@@ -41,13 +41,13 @@ header {
   text-decoration: none;
   font-weight: bold;
 }
-.acciones{
-
+.acciones {
   display: flex;
-  align-items: center;
-  gap: 20px;
-
+  align-items: center; 
+  justify-content: center; 
+  gap: 15px; 
 }
+
 .icon-cart {
   display: flex;
   align-items: center;
@@ -94,12 +94,6 @@ footer {
   background: #eee;
   text-align: center;
   padding: 1rem;
-}
-
-.logo img {
-  height: 0px; /* más balanceado con los íconos */
-  width: auto;
-  object-fit: contain;
 }
 
 
