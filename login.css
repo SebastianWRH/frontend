@@ -175,9 +175,10 @@ header {
 
 
 .contenedor-login {
-  width: 400px;
+  width: 500px;
   margin: 40px auto;
   padding: 20px;
+
 }
 
 .contenedor-login h2 {
@@ -191,12 +192,12 @@ header {
 
 .campo label {
   display: block;
-  font-weight: 600;
+  font-weight: 600px;
   margin-bottom: 5px;
 }
 
 .campo input {
-  width: 500px !important;
+  width: 100% !important;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -243,7 +244,7 @@ button[type="submit"] {
   padding: 20px;
   background: rgba(155, 155, 155, 0.041);
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.575);
 }
 
 .contenedor-cliente h2 {
