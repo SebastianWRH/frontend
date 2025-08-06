@@ -365,3 +365,58 @@ button[type="submit"] {
 
 
 
+/* ===== Adaptación móvil para login / nuevo cliente con bordes visibles ===== */
+@media (max-width: 768px) {
+  .contenedor-general {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  /* Contenedor de login y nuevo cliente */
+  .contenedor-login,
+  .contenedor-cliente {
+    width: 90%;                 /* deja espacio a los lados para ver bordes */
+    max-width: 420px;           /* no se hace enorme en móviles grandes */
+    margin: 0 auto;
+    padding: 18px;
+    border: 1px solid #ccc;     /* borde visible */
+    border-radius: 10px;        /* esquinas redondeadas */
+    background-color: #fff;     /* fondo blanco para resaltar */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* sombra suave */
+  }
+
+  /* Inputs y selects adaptativos */
+  .contenedor-login .campo input,
+  .contenedor-cliente .campo input,
+  .contenedor-login .campo select,
+  .contenedor-cliente .campo select {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* Botones adaptativos */
+  .btn,
+  button[type="submit"] {
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 12px auto 0;
+  }
+
+  /* Títulos más compactos en móvil */
+  .titulo-login {
+    font-size: 28px;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* Eliminar márgenes laterales forzados */
+  .contenedor-login,
+  .contenedor-cliente {
+    margin-left: 0 !important;
+  }
+}
