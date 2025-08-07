@@ -14,28 +14,25 @@ document.getElementById('form-login').addEventListener('submit', async function 
     });
 
     const data = await respuesta.json();
-
+    
     if (respuesta.ok) {
       // Guardar al usuario en localStorage (sin la contraseña)
       localStorage.setItem('usuario', JSON.stringify(data.usuario));
 
-      // Redirigir a la página principal o perfil
-      window.location.href = 'perfil.html';
+      // Redirigir según el rol
+      if (data.usuario.rol === 'admin') {
+        window.location.href = 'admin.html'; // Página exclusiva admin
+      } else {
+        window.location.href = 'perfil.html'; // Página normal para cliente
+      }
     } else {
       document.getElementById('mensaje-login').textContent = data.mensaje || 'Error al iniciar sesión';
     }
+
   } catch (error) {
     console.error('Error al enviar datos:', error);
     document.getElementById('mensaje-login').textContent = 'Error del servidor o conexión';
   }
-
-
-
-  if (data.usuario.rol === 'admin') {
-  window.location.href = 'admin.html'; // Tu página exclusiva de admin
-} else {
-  window.location.href = 'perfil.html'; // Página normal para clientes
-}
 
 
 });
