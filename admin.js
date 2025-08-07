@@ -41,31 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function mostrarTablaUsuarios(usuarios) {
   const contenido = document.getElementById("contenido");
 
