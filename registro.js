@@ -66,5 +66,28 @@ document.addEventListener('DOMContentLoaded', () => {
       mensaje.textContent = 'Ocurrió un error. Intenta nuevamente.';
       mensaje.style.color = 'red';
     }
+
+
+
+
+        try {
+      const res = await fetch('https://tu-backend.com/registro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        alert(result.error || 'Error al registrar usuario');
+        return;
+      }
+
+      alert('Registro exitoso');
+    } catch (error) {
+      alert('Error de conexión con el servidor');
+    }
+
   });
 });
