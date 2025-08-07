@@ -62,6 +62,7 @@ function mostrarTablaUsuarios(usuarios) {
             <td>${u.nombre}</td>
             <td>${u.correo}</td>
             <td>${u.rol}</td>
+            <td><button class="eliminar-btn" data-id="${u.id}">🗑️ Eliminar</button></td>
           </tr>
         `
           )
@@ -72,3 +73,27 @@ function mostrarTablaUsuarios(usuarios) {
 
   contenido.innerHTML = html;
 }
+
+
+
+document.addEventListener("click", async (e) => {
+  if (e.target.classList.contains("eliminar-btn")) {
+    const id = e.target.dataset.id;
+    const confirmar = confirm("¿Seguro que quieres eliminar este usuario?");
+    if (confirmar) {
+      try {
+        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/usuarios/${id}`, {
+          method: "DELETE",
+        });
+        if (res.ok) {
+          alert("Usuario eliminado correctamente");
+          location.reload();
+        } else {
+          alert("Error al eliminar usuario");
+        }
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+      }
+    }
+  }
+});
