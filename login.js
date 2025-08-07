@@ -28,4 +28,14 @@ document.getElementById('form-login').addEventListener('submit', async function 
     console.error('Error al enviar datos:', error);
     document.getElementById('mensaje-login').textContent = 'Error del servidor o conexión';
   }
+
+
+
+  if (data.usuario.rol === 'admin') {
+  window.location.href = 'admin.html'; // Tu página exclusiva de admin
+} else {
+  window.location.href = 'perfil.html'; // Página normal para clientes
+}
+
+
 });
