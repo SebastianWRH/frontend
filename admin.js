@@ -75,7 +75,6 @@ function mostrarTablaUsuarios(usuarios) {
 }
 
 
-
 document.addEventListener("click", async (e) => {
   if (e.target.classList.contains("eliminar-btn")) {
     const id = e.target.dataset.id;
@@ -85,14 +84,18 @@ document.addEventListener("click", async (e) => {
         const res = await fetch(`https://aurora-backend-ve7u.onrender.com/usuarios/${id}`, {
           method: "DELETE",
         });
+
         if (res.ok) {
           alert("Usuario eliminado correctamente");
           location.reload();
         } else {
-          alert("Error al eliminar usuario");
+          const data = await res.json();
+          console.error("Respuesta del servidor:", data);
+          alert("Error al eliminar usuario: " + (data.error || "desconocido"));
         }
       } catch (error) {
         console.error("Error al eliminar:", error);
+        alert("Error al conectar con el servidor");
       }
     }
   }
