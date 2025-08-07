@@ -32,7 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const res = await fetch('https://aurora-backend-ve7u.onrender.com/registro', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           nombre,
           correo,
@@ -58,10 +60,34 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje.textContent = data.error || 'Error al registrar.';
         mensaje.style.color = 'red';
       }
+
     } catch (error) {
       console.error('Error al registrar:', error);
-      mensaje.textContent = 'Error de conexión con el servidor.';
+      mensaje.textContent = 'Ocurrió un error. Intenta nuevamente.';
       mensaje.style.color = 'red';
     }
+
+
+
+
+        try {
+      const res = await fetch('https://tu-backend.com/registro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        alert(result.error || 'Error al registrar usuario');
+        return;
+      }
+
+      alert('Registro exitoso');
+    } catch (error) {
+      alert('Error de conexión con el servidor');
+    }
+
   });
 });
