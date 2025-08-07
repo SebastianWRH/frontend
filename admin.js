@@ -30,9 +30,64 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-  document.getElementById('productos-btn').addEventListener('click', () => {
-    document.getElementById('contenido').innerHTML = `<h2>Productos</h2><p>Contenido de productos.</p>`;
-  });
+document.getElementById('productos-btn').addEventListener('click', async () => {
+  try {
+    const res = await fetch("https://aurora-backend-ve7u.onrender.com/productos");
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.mensaje || "Error al obtener productos");
+
+    mostrarTablaProductos(data.productos);
+  } catch (error) {
+    console.error("Error al obtener productos:", error);
+    document.getElementById("contenido").innerHTML = "<p>Error al cargar productos.</p>";
+  }
+});
+
+function mostrarTablaProductos(productos) {
+  const contenido = document.getElementById("contenido");
+
+  let html = `
+    <h2>🛒 Lista de Productos</h2>
+    <button id="agregar-producto-btn">➕ Agregar Producto</button>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Categoría</th>
+          <th>Stock</th>
+          <th>Miniatura</th>
+          <th>Imágenes</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${productos.map(p => `
+          <tr>
+            <td>${p.id}</td>
+            <td>${p.nombre}</td>
+            <td>${p.descripcion}</td>
+            <td>S/ ${p.precio}</td>
+            <td>${p.categoria}</td>
+            <td>${p.stock}</td>
+            <td><img src="${p.miniatura}" width="50"></td>
+            <td>${p.imagenes?.split(',').map(i => `<img src="${i}" width="30">`).join(' ')}</td>
+            <td>
+              <button class="editar-btn" data-id="${p.id}">✏️ Editar</button>
+              <button class="eliminar-producto-btn" data-id="${p.id}">🗑️ Eliminar</button>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+
+  contenido.innerHTML = html;
+}
+
 
   document.getElementById('pedidos-btn').addEventListener('click', () => {
     document.getElementById('contenido').innerHTML = `<h2>Pedidos</h2><p>Contenido de pedidos.</p>`;
@@ -62,7 +117,6 @@ function mostrarTablaUsuarios(usuarios) {
             <td>${u.nombre}</td>
             <td>${u.correo}</td>
             <td>${u.rol}</td>
-            <td><button class="eliminar-btn" data-id="${u.id}">🗑️ Eliminar</button></td>
           </tr>
         `
           )
@@ -75,26 +129,28 @@ function mostrarTablaUsuarios(usuarios) {
 }
 
 
+
+
+
 document.addEventListener("click", async (e) => {
-  if (e.target.classList.contains("eliminar-btn")) {
+  if (e.target.classList.contains("eliminar-producto-btn")) {
     const id = e.target.dataset.id;
-    const confirmar = confirm("¿Seguro que quieres eliminar este usuario?");
+    const confirmar = confirm("¿Eliminar este producto?");
     if (confirmar) {
       try {
-        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/usuarios/${id}`, {
-          method: "DELETE",
+        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`, {
+          method: "DELETE"
         });
 
-        if (res.ok) {
-          alert("Usuario eliminado correctamente");
-          location.reload();
-        } else {
+        if (!res.ok) {
           const data = await res.json();
-          console.error("Respuesta del servidor:", data);
-          alert("Error al eliminar usuario: " + (data.error || "desconocido"));
+          alert("Error al eliminar: " + (data.error || "desconocido"));
+        } else {
+          alert("Producto eliminado correctamente");
+          document.getElementById('productos-btn').click(); // Recargar productos
         }
       } catch (error) {
-        console.error("Error al eliminar:", error);
+        console.error("Error al eliminar producto:", error);
         alert("Error al conectar con el servidor");
       }
     }

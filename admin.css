@@ -86,3 +86,15 @@ h2 {
   margin-bottom: 15px;
   color: #2c3e50;
 }
+.eliminar-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.eliminar-btn:hover {
+  background-color: #c0392b;
+}
