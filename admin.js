@@ -1,57 +1,99 @@
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   const usuario = JSON.parse(localStorage.getItem('usuario'));
 
   if (!usuario || usuario.rol !== 'admin') {
-    alert('Acceso no autorizado');
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
     return;
   }
 
+  document.getElementById('admin-nombre').textContent = `Hola, ${usuario.nombre}`;
+
+  // Cerrar sesión
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.removeItem('usuario');
+    window.location.href = 'login.html';
+  });
+
+  // Aquí puedes agregar manejadores para botones
+ document.getElementById('usuarios-btn').addEventListener('click', async () => {
   try {
-    const res = await fetch('https://aurora-backend-ve7u.onrender.com/usuarios');
+    const res = await fetch("https://aurora-backend-ve7u.onrender.com/usuarios");
     const data = await res.json();
 
-    const tbody = document.getElementById('tabla-usuarios');
-    data.forEach(user => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td><input value="${user.nombre}" data-id="${user.id}" data-campo="nombre" /></td>
-        <td><input value="${user.correo}" data-id="${user.id}" data-campo="correo" /></td>
-        <td>
-          <select data-id="${user.id}" data-campo="rol">
-            <option value="cliente" ${user.rol === 'cliente' ? 'selected' : ''}>Cliente</option>
-            <option value="admin" ${user.rol === 'admin' ? 'selected' : ''}>Admin</option>
-          </select>
-        </td>
-        <td>
-          <button onclick="guardar(${user.id})">Guardar</button>
-        </td>
-      `;
-      tbody.appendChild(row);
-    });
-  } catch (err) {
-    console.error('Error al cargar usuarios:', err);
+    if (!res.ok) throw new Error(data.mensaje || "Error al obtener usuarios");
+
+    mostrarTablaUsuarios(data.usuarios);
+  } catch (error) {
+    console.error("Error al obtener usuarios:", error);
+    document.getElementById("contenido").innerHTML = "<p>Error al cargar usuarios.</p>";
   }
 });
 
-async function guardar(id) {
-  const inputs = document.querySelectorAll(`[data-id="${id}"]`);
-  const datos = {};
 
-  inputs.forEach(input => {
-    datos[input.dataset.campo] = input.value;
+  document.getElementById('productos-btn').addEventListener('click', () => {
+    document.getElementById('contenido').innerHTML = `<h2>Productos</h2><p>Contenido de productos.</p>`;
   });
 
-  try {
-    const res = await fetch(`https://aurora-backend-ve7u.onrender.com/usuarios/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(datos)
-    });
+  document.getElementById('pedidos-btn').addEventListener('click', () => {
+    document.getElementById('contenido').innerHTML = `<h2>Pedidos</h2><p>Contenido de pedidos.</p>`;
+  });
+});
 
-    const resultado = await res.json();
-    alert(resultado.mensaje || 'Actualizado');
-  } catch (err) {
-    console.error('Error al guardar:', err);
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function mostrarTablaUsuarios(usuarios) {
+  const contenido = document.getElementById("contenido");
+
+  let html = `
+    <h2>👥 Lista de Usuarios</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Rol</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${usuarios
+          .map(
+            (u) => `
+          <tr>
+            <td>${u.nombre}</td>
+            <td>${u.correo}</td>
+            <td>${u.rol}</td>
+          </tr>
+        `
+          )
+          .join("")}
+      </tbody>
+    </table>
+  `;
+
+  contenido.innerHTML = html;
 }
