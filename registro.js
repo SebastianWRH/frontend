@@ -57,37 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje.style.color = 'green';
         form.reset();
       } else {
-        mensaje.textContent = data.error || 'Error al registrar.';
+        // Aquí se mostrará el mensaje exacto del backend
+        mensaje.textContent = data.mensaje || 'Error al registrar.';
         mensaje.style.color = 'red';
       }
 
     } catch (error) {
       console.error('Error al registrar:', error);
-      mensaje.textContent = 'Ocurrió un error. Intenta nuevamente.';
+      mensaje.textContent = 'Error de conexión con el servidor.';
       mensaje.style.color = 'red';
     }
-
-
-
-
-        try {
-      const res = await fetch('https://tu-backend.com/registro', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok) {
-        alert(result.error || 'Error al registrar usuario');
-        return;
-      }
-
-      alert('Registro exitoso');
-    } catch (error) {
-      alert('Error de conexión con el servidor');
-    }
-
   });
 });
