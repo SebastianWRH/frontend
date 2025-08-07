@@ -8,6 +8,27 @@
   <link rel="stylesheet" href="perfil.css">
   <link rel="stylesheet" href="responsive.css">
 </head>
+<script>
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+  if (!usuario) {
+    // Si no hay usuario logueado, redirige al login
+    window.location.href = 'login.html';
+  } else if (usuario.rol === 'admin') {
+    // Si es admin, redirige a su panel exclusivo
+    window.location.href = 'admin.html';
+  } else {
+    // Mostrar datos si es cliente
+    document.getElementById('nombre-usuario').textContent = usuario.nombre;
+    // Puedes cargar más info del usuario aquí si lo deseas
+  }
+
+  // Cerrar sesión
+  document.getElementById('cerrar-sesion').addEventListener('click', () => {
+    localStorage.removeItem('usuario');
+    window.location.href = 'index.html';
+  });
+</script>
 
 <body>
 
