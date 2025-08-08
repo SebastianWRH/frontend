@@ -77,7 +77,8 @@ function mostrarTablaProductos(productos) {
         <td><img src="${producto.miniatura}" alt="Miniatura" height="50"></td>
         <td>
           <button class="editar-btn" data-id="${producto.id}">✏️</button>
-          <button class="eliminar-btn" data-id="${producto.id}">🗑️</button>
+          <button class="eliminar-producto-btn" data-id="${producto.id}">🗑️</button>
+
         </td>
       </tr>
     `;
@@ -104,7 +105,7 @@ function mostrarTablaProductos(productos) {
       const id = btnEditar.dataset.id;
 
       try {
-        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/producto/${id}`);
+        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`);
         const producto = await res.json();
 
         if (!res.ok) throw new Error(producto.mensaje || "Error al obtener producto");
@@ -204,9 +205,11 @@ function abrirModalProducto(producto) {
 
   // Si es producto nuevo (undefined), limpiar el formulario
   if (!producto) {
-    form.reset(); // ← esta línea solo se ejecuta si el form existe
+    form.reset();             // Limpia los campos del formulario
+    form.dataset.id = "";     // Limpia el ID en caso de ser un producto nuevo
   } else {
     // Si es producto existente, cargar datos al formulario
+    form.dataset.id = producto.id;
     document.getElementById("nombre").value = producto.nombre || "";
     document.getElementById("descripcion").value = producto.descripcion || "";
     document.getElementById("precio").value = producto.precio || "";
@@ -214,6 +217,8 @@ function abrirModalProducto(producto) {
     document.getElementById("stock").value = producto.stock || "";
     document.getElementById("miniatura").value = producto.miniatura || "";
     document.getElementById("imagenes").value = (producto.imagenes || []).join(", ");
+
+
   }
 
   modal.style.display = "block";
@@ -260,7 +265,7 @@ document.getElementById("formProducto").addEventListener("submit", async (e) => 
 
     alert("Producto guardado correctamente");
     document.getElementById("modalProducto").style.display = "none";
-    cargarProductos(); // recarga la tabla
+    document.getElementById('productos-btn').click();
   } catch (error) {
     console.error("Error:", error);
     alert("Hubo un error al guardar el producto");
