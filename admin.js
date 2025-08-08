@@ -170,3 +170,83 @@ document.addEventListener("click", async (e) => {
     }
   }
 });
+
+
+
+
+
+
+
+
+
+
+// Mostrar modal vacío al dar clic en "Agregar producto"
+document.getElementById("btnAgregarProducto").addEventListener("click", () => {
+  abrirModalProducto();
+});
+
+function abrirModalProducto(producto = null) {
+  // Si hay producto, es para editar; si no, para agregar
+  document.getElementById("formProducto").reset(); // limpia campos
+  document.getElementById("formProducto").dataset.id = producto ? producto.id : "";
+
+  // Si hay producto, rellenamos los campos
+  if (producto) {
+    document.getElementById("nombre").value = producto.nombre;
+    document.getElementById("descripcion").value = producto.descripcion;
+    document.getElementById("precio").value = producto.precio;
+    document.getElementById("categoria").value = producto.categoria;
+    document.getElementById("stock").value = producto.stock;
+    document.getElementById("miniatura").value = producto.miniatura;
+    document.getElementById("imagenes").value = producto.imagenes.join(",");
+  }
+
+  document.getElementById("modalProducto").style.display = "block";
+}
+
+// Cerrar modal
+document.getElementById("cerrarModal").addEventListener("click", () => {
+  document.getElementById("modalProducto").style.display = "none";
+});
+
+// Enviar formulario (Agregar o Editar)
+document.getElementById("formProducto").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const id = e.target.dataset.id;
+  const producto = {
+    nombre: document.getElementById("nombre").value,
+    descripcion: document.getElementById("descripcion").value,
+    precio: parseFloat(document.getElementById("precio").value),
+    categoria: document.getElementById("categoria").value,
+    stock: parseInt(document.getElementById("stock").value),
+    miniatura: document.getElementById("miniatura").value,
+    imagenes: document.getElementById("imagenes").value.split(",").map(i => i.trim())
+  };
+
+  try {
+    if (id) {
+      // EDITAR producto
+      const res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(producto)
+      });
+      if (!res.ok) throw new Error("Error al editar producto");
+    } else {
+      // AGREGAR producto
+      const res = await fetch("https://aurora-backend-ve7u.onrender.com/productos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(producto)
+      });
+      if (!res.ok) throw new Error("Error al agregar producto");
+    }
+
+    alert("Producto guardado correctamente");
+    document.getElementById("modalProducto").style.display = "none";
+    cargarProductos(); // recarga la tabla
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Hubo un error al guardar el producto");
+  }
+});
