@@ -46,9 +46,8 @@ document.getElementById('productos-btn').addEventListener('click', async () => {
 
 function mostrarTablaProductos(productos) {
   const contenido = document.getElementById("contenido");
-
   let html = `
-    <h2>🛒 Lista de Productos</h2>
+    <h2>Gestión de Productos</h2>
     <button id="agregar-producto-btn">➕ Agregar Producto</button>
     <table>
       <thead>
@@ -60,46 +59,63 @@ function mostrarTablaProductos(productos) {
           <th>Categoría</th>
           <th>Stock</th>
           <th>Miniatura</th>
-          <th>Imágenes</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        ${productos.map(p => `
-          <tr>
-            <td>${p.id}</td>
-            <td>${p.nombre}</td>
-            <td>${p.descripcion}</td>
-            <td>S/ ${p.precio}</td>
-            <td>${p.categoria}</td>
-            <td>${p.stock}</td>
-            <td><img src="${p.miniatura}" width="50"></td>
-            <td>
-  ${
-    Array.isArray(p.imagenes)
-      ? p.imagenes.map(i => `<img src="${i}" width="30">`).join(' ')
-      : (() => {
-          try {
-            const arr = JSON.parse(p.imagenes || '[]');
-            return arr.map(i => `<img src="${i}" width="30">`).join(' ');
-          } catch {
-            return '';
-          }
-        })()
-  }
-</td>
+  `;
 
-            <td>
-              <button class="editar-btn" data-id="${p.id}">✏️ Editar</button>
-              <button class="eliminar-producto-btn" data-id="${p.id}">🗑️ Eliminar</button>
-            </td>
-          </tr>
-        `).join('')}
+  productos.forEach((producto) => {
+    html += `
+      <tr>
+        <td>${producto.id}</td>
+        <td>${producto.nombre}</td>
+        <td>${producto.descripcion}</td>
+        <td>S/ ${producto.precio}</td>
+        <td>${producto.categoria}</td>
+        <td>${producto.stock}</td>
+        <td><img src="${producto.miniatura}" alt="Miniatura" height="50"></td>
+        <td>
+          <button class="editar-btn" data-id="${producto.id}">✏️</button>
+          <button class="eliminar-btn" data-id="${producto.id}">🗑️</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  html += `
       </tbody>
     </table>
   `;
 
   contenido.innerHTML = html;
+
+  // ✅ Evento para botón "Agregar Producto"
+  const btnAgregar = document.getElementById("agregar-producto-btn");
+  if (btnAgregar) {
+    btnAgregar.addEventListener("click", () => {
+      abrirModalProducto(); // abre modal vacío para nuevo producto
+    });
+  }
+
+  // ✅ Eventos para todos los botones "Editar"
+  document.querySelectorAll(".editar-btn").forEach((btnEditar) => {
+    btnEditar.addEventListener("click", async () => {
+      const id = btnEditar.dataset.id;
+
+      try {
+        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/producto/${id}`);
+        const producto = await res.json();
+
+        if (!res.ok) throw new Error(producto.mensaje || "Error al obtener producto");
+
+        abrirModalProducto(producto); // abre modal con datos del producto
+      } catch (error) {
+        console.error("Error al obtener producto:", error);
+        alert("No se pudo cargar el producto");
+      }
+    });
+  });
 }
 
 
@@ -177,32 +193,32 @@ document.addEventListener("click", async (e) => {
 
 
 
+function abrirModalProducto(producto) {
+  const modal = document.getElementById("modalProducto");
+  const form = document.getElementById("formProducto");
 
-
-
-// Mostrar modal vacío al dar clic en "Agregar producto"
-document.getElementById("btnAgregarProducto").addEventListener("click", () => {
-  abrirModalProducto();
-});
-
-function abrirModalProducto(producto = null) {
-  // Si hay producto, es para editar; si no, para agregar
-  document.getElementById("formProducto").reset(); // limpia campos
-  document.getElementById("formProducto").dataset.id = producto ? producto.id : "";
-
-  // Si hay producto, rellenamos los campos
-  if (producto) {
-    document.getElementById("nombre").value = producto.nombre;
-    document.getElementById("descripcion").value = producto.descripcion;
-    document.getElementById("precio").value = producto.precio;
-    document.getElementById("categoria").value = producto.categoria;
-    document.getElementById("stock").value = producto.stock;
-    document.getElementById("miniatura").value = producto.miniatura;
-    document.getElementById("imagenes").value = producto.imagenes.join(",");
+  if (!modal || !form) {
+    console.error("No se encontró el modal o el formulario");
+    return;
   }
 
-  document.getElementById("modalProducto").style.display = "block";
+  // Si es producto nuevo (undefined), limpiar el formulario
+  if (!producto) {
+    form.reset(); // ← esta línea solo se ejecuta si el form existe
+  } else {
+    // Si es producto existente, cargar datos al formulario
+    document.getElementById("nombre").value = producto.nombre || "";
+    document.getElementById("descripcion").value = producto.descripcion || "";
+    document.getElementById("precio").value = producto.precio || "";
+    document.getElementById("categoria").value = producto.categoria || "";
+    document.getElementById("stock").value = producto.stock || "";
+    document.getElementById("miniatura").value = producto.miniatura || "";
+    document.getElementById("imagenes").value = (producto.imagenes || []).join(", ");
+  }
+
+  modal.style.display = "block";
 }
+
 
 // Cerrar modal
 document.getElementById("cerrarModal").addEventListener("click", () => {
