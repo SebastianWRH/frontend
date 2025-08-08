@@ -43,7 +43,6 @@ async function cargarUsuarios() {
     const usuarios = data.usuarios; // 👈 ahora lo hacemos bien
 
     if (!Array.isArray(usuarios)) throw new Error('Respuesta inesperada del servidor');
-
     const tablaHTML = `
       <table class="tabla">
         <thead>
@@ -72,7 +71,7 @@ async function cargarUsuarios() {
       </table>
     `;
 
-    document.getElementById('contenido-dinamico').innerHTML = tablaHTML;
+    document.getElementById('contenido-dinamico').innerHTML =tablaHTML;
 
   } catch (error) {
     console.error('Error al cargar usuarios:', error);
@@ -92,7 +91,9 @@ async function cargarProductos() {
     const productos = data.productos;
 
     if (!Array.isArray(productos)) throw new Error('Respuesta inesperada del servidor');
-
+    const botonAgregar = `
+      <button id="btn-agregar-producto" style="margin-bottom: 10px;">➕ Agregar producto</button>
+    `;
     const tablaHTML = `
       <table class="tabla">
         <thead>
@@ -127,11 +128,139 @@ async function cargarProductos() {
       </table>
     `;
 
-    document.getElementById('contenido-dinamico').innerHTML = tablaHTML;
+    document.getElementById('contenido-dinamico').innerHTML = botonAgregar + tablaHTML;
+
+    // ✅ Asigna evento después de insertar el botón
+    const btnAgregar = document.getElementById('btn-agregar-producto');
+    if (btnAgregar) {
+      btnAgregar.addEventListener('click', () => {
+        document.getElementById('formProducto').reset();
+        document.getElementById('id').value = '';
+        document.getElementById('modalProducto').style.display = 'block';
+      });
+    }
+
+
 
   } catch (error) {
     console.error('Error al cargar productos:', error);
     document.getElementById('contenido-dinamico').innerHTML = `<p>Error al cargar productos.</p>`;
   }
+
+
+
+      // Asignar eventos luego de renderizar la tabla
+    document.querySelectorAll('.eliminar-producto').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        const confirmar = confirm('¿Estás seguro de que deseas eliminar este producto?');
+        if (!confirmar) return;
+
+        try {
+          const res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`, {
+            method: 'DELETE'
+          });
+
+          if (!res.ok) throw new Error('Error al eliminar el producto');
+
+          alert('Producto eliminado correctamente');
+          cargarProductos(); // recarga la tabla
+        } catch (err) {
+          console.error('Error eliminando producto:', err);
+          alert('Hubo un problema al eliminar el producto');
+        }
+      });
+    });
+
+    document.querySelectorAll('.editar-producto').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+
+        try {
+          const res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`);
+          const data = await res.json();
+          const producto = data; // porque el backend devuelve el objeto directamente
+
+
+          // Rellenar formulario
+          document.getElementById('id').value = producto.id;
+          document.getElementById('nombre').value = producto.nombre;
+          document.getElementById('descripcion').value = producto.descripcion;
+          document.getElementById('precio').value = producto.precio;
+          document.getElementById('categoria').value = producto.categoria;
+          document.getElementById('stock').value = producto.stock;
+          document.getElementById('miniatura').value = producto.miniatura;
+
+          document.getElementById('modalProducto').style.display = 'block';
+        } catch (err) {
+          console.error('Error al obtener producto:', err);
+          alert('No se pudo cargar el producto para editar');
+        }
+      });
+    });
+
+
+    const btnAgregar = document.getElementById('btn-agregar-producto');
+    if (btnAgregar) {
+      btnAgregar.addEventListener('click', () => {
+        // Limpia y muestra el formulario para nuevo producto
+        document.getElementById('formProducto').reset();
+        document.getElementById('id').value = '';
+        document.getElementById('modalProducto').style.display = 'block';
+      });
+    }
 }
 
+
+
+document.getElementById('formProducto').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const producto = {
+    nombre: document.getElementById('nombre').value,
+    descripcion: document.getElementById('descripcion').value,
+    precio: parseFloat(document.getElementById('precio').value),
+    categoria: document.getElementById('categoria').value,
+    stock: parseInt(document.getElementById('stock').value),
+    miniatura: document.getElementById('miniatura').value
+  };
+
+  const id = document.getElementById('id').value;
+
+  try {
+    let res;
+    if (id) {
+      // Editar
+      res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(producto)
+      });
+    } else {
+      // Crear
+      res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(producto)
+      });
+    }
+
+    if (!res.ok) throw new Error('Error al guardar producto');
+
+    alert('Producto guardado correctamente');
+    document.getElementById('modalProducto').style.display = 'none';
+    cargarProductos(); // recargar lista
+
+  } catch (err) {
+    console.error('Error guardando producto:', err);
+    alert('Error al guardar producto');
+  }
+});
+
+
+
+document.getElementById('btn-cancelar').addEventListener('click', () => {
+  document.getElementById('modalProducto').style.display = 'none';
+  document.getElementById('formProducto').reset();
+  document.getElementById('id').value = '';
+});
