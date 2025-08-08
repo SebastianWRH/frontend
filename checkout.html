@@ -63,10 +63,33 @@
       <a href="aretes.html">Catálogo</a>
       <a href="contactame.html">Contáctame</a>
     </div>
-
-    
-
   </nav>
   </header>
+  <main id="checkout">
+  <section class="checkout-container">
+    <h1>Resumen de tu Pedido</h1>
+
+    <!-- Lista de productos -->
+    <section id="resumen-carrito" class="checkout-resumen"></section>
+    <!-- Total -->
+    <div class="checkout-total">
+      <p><strong>Total:</strong> S/ <span id="checkout-total">0.00</span></p>
+    </div>
+
+    <!-- Datos de envío -->
+    <form id="form-envio" class="form-envio">
+      <h2>Datos de Envío</h2>
+      <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required>
+      <input type="text" id="direccion" name="direccion" placeholder="Dirección" required>
+      <input type="text" id="distrito" name="distrito" placeholder="Distrito" required>
+      <input type="text" id="telefono" name="telefono" placeholder="Teléfono" required>
+      <button type="submit" class="btn-confirmar">Confirmar compra</button>
+    </form>
+  </section>
+</main>
+
+<script src="carrito-slide.html"></script>
+<script src="panel-sesion.js"></script>
+<script src="checkout.js"></script>
 </body>
 </html>

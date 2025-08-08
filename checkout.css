@@ -274,3 +274,81 @@ header {
     font-size: 14px;
   }
 }
+
+
+
+
+
+
+/* CONTENEDOR PRINCIPAL */
+#checkout {
+  background-color: #fff;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: auto;
+  color: #000;
+}
+
+/* SECCIÓN */
+.checkout-container {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* TITULOS */
+.checkout-container h1,
+.checkout-container h2 {
+  color: #d4af37; /* dorado */
+  margin-bottom: 1rem;
+}
+
+/* PRODUCTOS */
+.checkout-productos {
+  border: 1px solid #eee;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.checkout-productos .producto {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* TOTAL */
+.checkout-total {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #000;
+}
+
+/* FORMULARIO */
+.form-envio input {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* BOTÓN CONFIRMAR */
+.btn-confirmar {
+  background-color: #000;
+  color: #d4af37;
+  padding: 0.9rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-confirmar:hover {
+  background-color: #333;
+}

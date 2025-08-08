@@ -75,6 +75,7 @@ function renderizarCarritoEnSlide() {
       <div class="info-item">
         <h4>${escapeHtml(producto.nombre || '')}</h4>
         <p>Cantidad: ${Number(producto.cantidad)}</p>
+        <p>Color: ${(producto.color)}</p>
         <p>Precio: ${escapeHtml(String(producto.precio || ''))}</p>
         <button class="eliminar-btn" data-index="${index}">🗑️ Eliminar</button>
       </div>
