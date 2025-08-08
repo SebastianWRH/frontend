@@ -36,11 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
 async function cargarUsuarios() {
   try {
     const res = await fetch('https://aurora-backend-ve7u.onrender.com/usuarios');
-    const usuarios = await res.json();
+    const data = await res.json();
 
-    console.log("Respuesta recibida:", data); // 👀
+    console.log("Respuesta completa del backend:", data);
 
-    if (!Array.isArray(data)) throw new Error('Respuesta inesperada del servidor');
+    const usuarios = data.usuarios; // 👈 ahora lo hacemos bien
+
+    if (!Array.isArray(usuarios)) throw new Error('Respuesta inesperada del servidor');
 
     const tablaHTML = `
       <table class="tabla">
@@ -56,7 +58,7 @@ async function cargarUsuarios() {
         <tbody>
           ${usuarios.map(usuario => `
             <tr>
-              <td>${usuario.id}</td>
+              <td>${usuario.id || usuario.id || 'sin id'}</td>
               <td>${usuario.nombre}</td>
               <td>${usuario.correo}</td>
               <td>${usuario.rol}</td>
