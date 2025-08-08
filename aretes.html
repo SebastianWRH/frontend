@@ -117,7 +117,9 @@
   document.addEventListener('DOMContentLoaded', async () => {
     try {
       const res = await fetch('https://aurora-backend-ve7u.onrender.com/productos');
-      productosBD = await res.json();
+      const data = await res.json();
+      productosBD = data.productos;
+
 
       if (categoriaURL) {
         checkboxes.forEach(cb => {
