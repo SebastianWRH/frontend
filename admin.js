@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (seccion === 'clientes') {
         cargarUsuarios();
       } else if (seccion === 'productos') {
-        contenido.innerHTML = `<p>Lista de productos cargada aquí.</p>`;
+        cargarProductos();
       } else if (seccion === 'pedidos') {
         contenido.innerHTML = `<p>Lista de pedidos cargada aquí.</p>`;
       }
@@ -79,3 +79,59 @@ async function cargarUsuarios() {
     document.getElementById('contenido-dinamico').innerHTML = `<p>Error al cargar usuarios.</p>`;
   }
 }
+
+
+
+async function cargarProductos() {
+  try {
+    const res = await fetch('https://aurora-backend-ve7u.onrender.com/productos');
+    const data = await res.json();
+
+    console.log("Respuesta completa del backend (productos):", data);
+
+    const productos = data.productos;
+
+    if (!Array.isArray(productos)) throw new Error('Respuesta inesperada del servidor');
+
+    const tablaHTML = `
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+            <th>Miniatura</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${productos.map(producto => `
+            <tr>
+              <td>${producto.id || 'sin id'}</td>
+              <td>${producto.nombre}</td>
+              <td>${producto.descripcion}</td>
+              <td>S/. ${producto.precio}</td>
+              <td>${producto.categoria}</td>
+              <td>${producto.stock}</td>
+              <td><img src="${producto.miniatura}" width="50" height="50" /></td>
+              <td>
+                <button class="editar-producto" data-id="${producto.id}">Editar</button>
+                <button class="eliminar-producto" data-id="${producto.id}">Eliminar</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+
+    document.getElementById('contenido-dinamico').innerHTML = tablaHTML;
+
+  } catch (error) {
+    console.error('Error al cargar productos:', error);
+    document.getElementById('contenido-dinamico').innerHTML = `<p>Error al cargar productos.</p>`;
+  }
+}
+
