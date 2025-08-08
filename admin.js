@@ -74,7 +74,21 @@ function mostrarTablaProductos(productos) {
             <td>${p.categoria}</td>
             <td>${p.stock}</td>
             <td><img src="${p.miniatura}" width="50"></td>
-            <td>${p.imagenes?.split(',').map(i => `<img src="${i}" width="30">`).join(' ')}</td>
+            <td>
+  ${
+    Array.isArray(p.imagenes)
+      ? p.imagenes.map(i => `<img src="${i}" width="30">`).join(' ')
+      : (() => {
+          try {
+            const arr = JSON.parse(p.imagenes || '[]');
+            return arr.map(i => `<img src="${i}" width="30">`).join(' ');
+          } catch {
+            return '';
+          }
+        })()
+  }
+</td>
+
             <td>
               <button class="editar-btn" data-id="${p.id}">✏️ Editar</button>
               <button class="eliminar-producto-btn" data-id="${p.id}">🗑️ Eliminar</button>
