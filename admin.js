@@ -46,6 +46,7 @@ document.getElementById('productos-btn').addEventListener('click', async () => {
 
 function mostrarTablaProductos(productos) {
   const contenido = document.getElementById("contenido");
+
   let html = `
     <h2>Gestión de Productos</h2>
     <button id="agregar-producto-btn">➕ Agregar Producto</button>
@@ -78,7 +79,6 @@ function mostrarTablaProductos(productos) {
         <td>
           <button class="editar-btn" data-id="${producto.id}">✏️</button>
           <button class="eliminar-producto-btn" data-id="${producto.id}">🗑️</button>
-
         </td>
       </tr>
     `;
@@ -87,37 +87,80 @@ function mostrarTablaProductos(productos) {
   html += `
       </tbody>
     </table>
+
+    <div id="modalProducto" style="display: none;">
+      <form id="formProducto">
+        <input type="text" id="nombre" placeholder="Nombre" required />
+        <input type="text" id="descripcion" placeholder="Descripción" required />
+        <input type="number" id="precio" placeholder="Precio" required />
+        <input type="text" id="categoria" placeholder="Categoría" required />
+        <input type="number" id="stock" placeholder="Stock" required />
+        <input type="text" id="miniatura" placeholder="Miniatura URL" />
+        <input type="text" id="imagenes" placeholder="Imágenes (separadas por coma)" />
+        <button type="submit">Guardar</button>
+      </form>
+      <button id="cerrarModal">Cerrar</button>
+    </div>
   `;
 
   contenido.innerHTML = html;
 
-  // ✅ Evento para botón "Agregar Producto"
-  const btnAgregar = document.getElementById("agregar-producto-btn");
-  if (btnAgregar) {
-    btnAgregar.addEventListener("click", () => {
-      abrirModalProducto(); // abre modal vacío para nuevo producto
-    });
-  }
+  // Mostrar modal al hacer click en agregar producto
+  document.getElementById("agregar-producto-btn").addEventListener("click", () => {
+    document.getElementById("formProducto").reset();
+    delete document.getElementById("formProducto").dataset.id;
+    document.getElementById("modalProducto").style.display = "block";
+  });
 
-  // ✅ Eventos para todos los botones "Editar"
-  document.querySelectorAll(".editar-btn").forEach((btnEditar) => {
-    btnEditar.addEventListener("click", async () => {
-      const id = btnEditar.dataset.id;
+  // Cerrar modal
+  document.getElementById("cerrarModal").addEventListener("click", () => {
+    document.getElementById("modalProducto").style.display = "none";
+  });
 
-      try {
-        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`);
-        const producto = await res.json();
+  // Enviar formulario (agregar o editar)
+  document.getElementById("formProducto").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const id = e.target.dataset.id;
+    const producto = {
+      nombre: document.getElementById("nombre").value,
+      descripcion: document.getElementById("descripcion").value,
+      precio: parseFloat(document.getElementById("precio").value),
+      categoria: document.getElementById("categoria").value,
+      stock: parseInt(document.getElementById("stock").value),
+      miniatura: document.getElementById("miniatura").value,
+      imagenes: document.getElementById("imagenes").value
+        .split(",")
+        .map((i) => i.trim())
+    };
 
-        if (!res.ok) throw new Error(producto.mensaje || "Error al obtener producto");
-
-        abrirModalProducto(producto); // abre modal con datos del producto
-      } catch (error) {
-        console.error("Error al obtener producto:", error);
-        alert("No se pudo cargar el producto");
+    try {
+      let res;
+      if (id) {
+        res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(producto),
+        });
+        if (!res.ok) throw new Error("Error al editar producto");
+      } else {
+        res = await fetch("https://aurora-backend-ve7u.onrender.com/productos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(producto),
+        });
+        if (!res.ok) throw new Error("Error al agregar producto");
       }
-    });
+
+      alert("Producto guardado correctamente");
+      document.getElementById("modalProducto").style.display = "none";
+      document.getElementById("productos-btn").click(); // recarga la vista
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Hubo un error al guardar el producto");
+    }
   });
 }
+
 
 
   document.getElementById('pedidos-btn').addEventListener('click', () => {
@@ -226,48 +269,11 @@ function abrirModalProducto(producto) {
 
 
 // Cerrar modal
-document.getElementById("cerrarModal").addEventListener("click", () => {
-  document.getElementById("modalProducto").style.display = "none";
-});
 
 // Enviar formulario (Agregar o Editar)
-document.getElementById("formProducto").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const id = e.target.dataset.id;
-  const producto = {
-    nombre: document.getElementById("nombre").value,
-    descripcion: document.getElementById("descripcion").value,
-    precio: parseFloat(document.getElementById("precio").value),
-    categoria: document.getElementById("categoria").value,
-    stock: parseInt(document.getElementById("stock").value),
-    miniatura: document.getElementById("miniatura").value,
-    imagenes: document.getElementById("imagenes").value.split(",").map(i => i.trim())
-  };
 
-  try {
-    if (id) {
-      // EDITAR producto
-      const res = await fetch(`https://aurora-backend-ve7u.onrender.com/productos/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(producto)
-      });
-      if (!res.ok) throw new Error("Error al editar producto");
-    } else {
-      // AGREGAR producto
-      const res = await fetch("https://aurora-backend-ve7u.onrender.com/productos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(producto)
-      });
-      if (!res.ok) throw new Error("Error al agregar producto");
-    }
 
-    alert("Producto guardado correctamente");
-    document.getElementById("modalProducto").style.display = "none";
-    document.getElementById('productos-btn').click();
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Hubo un error al guardar el producto");
-  }
-});
+
+
+
+
