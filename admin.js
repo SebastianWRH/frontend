@@ -37,7 +37,7 @@ document.getElementById('productos-btn').addEventListener('click', async () => {
 
     if (!res.ok) throw new Error(data.mensaje || "Error al obtener productos");
 
-    mostrarTablaProductos(data.productos);
+    mostrarTablaProductos(data);
   } catch (error) {
     console.error("Error al obtener productos:", error);
     document.getElementById("contenido").innerHTML = "<p>Error al cargar productos.</p>";
