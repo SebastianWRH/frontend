@@ -2,35 +2,31 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel de Administración - AURORA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Admin</title>
   <link rel="stylesheet" href="admin.css" />
+  <script defer src="admin.js"></script>
 </head>
 <body>
   <div class="admin-container">
+    <!-- Menú lateral -->
     <aside class="sidebar">
-      <h2>👑 Admin</h2>
-      <nav>
-        <ul>
-          <li><a href="#" id="usuarios-btn">👥 Usuarios</a></li>
-          <li><a href="#" id="productos-btn">🛍️ Productos</a></li>
-          <li><a href="#" id="pedidos-btn">📦 Pedidos</a></li>
-          <li><a href="#" id="logout-btn">🔓 Cerrar sesión</a></li>
-        </ul>
+      <h2 class="logo">Aurora Admin</h2>
+      <nav class="menu">
+        <button data-section="clientes" class="menu-btn">Clientes</button>
+        <button data-section="productos" class="menu-btn">Productos</button>
+        <button data-section="pedidos" class="menu-btn">Pedidos</button>
       </nav>
+      <button id="logout-btn" class="logout-btn">Cerrar sesión</button>
     </aside>
 
+    <!-- Contenido principal -->
     <main class="main-content">
-      <header>
-        <h1>Panel de Administración</h1>
-        <p id="admin-nombre"></p>
-      </header>
-      <section id="contenido">
-        <p>Bienvenido al panel de administración.</p>
-      </section>
+      <h1 id="titulo-seccion">Bienvenido, Admin</h1>
+      <div id="contenido-dinamico">
+        <!-- Aquí se cargan los datos de cada sección -->
+      </div>
     </main>
   </div>
-
-  <script src="admin.js"></script>
 </body>
 </html>
