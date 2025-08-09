@@ -352,3 +352,22 @@ header {
 .btn-confirmar:hover {
   background-color: #333;
 }
+
+.acciones-envio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-editar {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #aaa;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-editar:hover {
+  background-color: #f2f2f2;
+}

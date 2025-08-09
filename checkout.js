@@ -114,4 +114,34 @@ document.addEventListener('DOMContentLoaded', () => {
       btnConfirmar.textContent = 'Confirmar compra';
     }
   });
+
+  rellenarDatosEnvio();
+
 });
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  if (!usuario) return;
+
+  try {
+    const res = await fetch(`https://aurora-backend-ve7u.onrender.com/usuario/${usuario.id}`);
+    const datos = await res.json();
+
+    // Insertamos en los spans directamente
+    document.getElementById("direccion").textContent = datos.direccion || "-";
+    document.getElementById("departamento").textContent = datos.departamento || "-";
+    document.getElementById("provincia").textContent = datos.provincia || "-";
+    document.getElementById("distrito").textContent = datos.distrito || "-";
+    document.getElementById("celular").textContent = datos.celular || "-";
+
+  } catch (error) {
+    console.error("Error al cargar datos de envío:", error);
+  }
+
+
+  
+});
+
+
+
