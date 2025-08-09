@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const usuario = JSON.parse(localStorage.getItem('usuario'));
   const contenedor = document.getElementById('perfil-contenido');
+  const token = localStorage.getItem('token');
+  if (!token) {
+  window.location.href = 'login.html'; // Sin token, te manda a login
+  return;
+}
 
   if (!usuario) {
     window.location.href = 'login.html';
@@ -71,7 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetch(`https://aurora-backend-ve7u.onrender.com/usuario/${usuario.id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` 
+       },
       body: JSON.stringify(nuevosDatos)
     })
     .then(res => res.json())

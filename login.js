@@ -18,6 +18,7 @@ document.getElementById('form-login').addEventListener('submit', async function 
     if (respuesta.ok) {
       // Guardar al usuario en localStorage (sin la contraseña)
       localStorage.setItem('usuario', JSON.stringify(data.usuario));
+      localStorage.setItem('token', data.token);
 
       // Redirigir según el rol
       if (data.usuario.rol === 'admin') {
