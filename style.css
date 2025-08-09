@@ -407,20 +407,30 @@ h2 {
 
   /* Hero */
   .hero {
-    flex-direction: column;
-    padding: 2rem;
+    width: 300px;
+    height: 150px;
+    padding: 3rem;
     gap: 20px;
-    text-align: center;
     background-image: url(fonfo.jpg);
     background-repeat: no-repeat;
-    background-size: cover; /* o contain según lo que busques */
-    background-position: right center; /* Pega la imagen al lado derecho verticalmente centrada */
+
   }
 
   .hero img {
     width: 100%;
     max-width: 280px;
   }
+
+  .hero-text {
+  font-size: 10px;
+  max-width: 170px;
+  color: white;
+  position: absolute;
+  right: 200px;
+}
+.hero-text p{
+  display: none;
+}
 
   /* Productos */
   .img-producto {
