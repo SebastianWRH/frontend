@@ -394,6 +394,10 @@ h2 {
     padding: 2rem;
     gap: 20px;
     text-align: center;
+    background-image: url(fonfo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover; /* o contain según lo que busques */
+    background-position: right center; /* Pega la imagen al lado derecho verticalmente centrada */
   }
 
   .hero img {
@@ -429,4 +433,91 @@ h2 {
     padding: 10px 16px;
     font-size: 14px;
   }
+}
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  section {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+@media (max-width: 768px) {
+  .pro-nav {
+    flex-direction: column !important;
+    gap: 5px !important;
+    background-color: transparent !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0px !important;
+  }
+
+  .contenedor-imagen {
+    position: relative; /* necesario para posicionar el texto arriba */
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: transparent;
+    margin: 0 auto;
+    border: none;
+    overflow: hidden;
+  }
+
+  .contenedor-imagen a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .img-producto {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 150px !important;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    object-fit: cover;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Texto arriba a la izquierda, encima de la imagen */
+  .texto-encima {
+    position: absolute !important;
+    top: 10px;
+    left: 10px;
+    transform: none !important;
+
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    color: #333;
+    z-index: 10;
+    text-align: left;
+    max-width: 70%;
+  }
+
+  .textito {
+    font-family: sans-serif;
+    font-size: 1.3rem !important;
+    font-weight: 600;
+    margin: 0;
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+  }
+
+  /* Botón "Ver Todo" centrado debajo de la imagen */
+  .btn-comprar {
+    display: none !important;
+  }
+
+  .btn-comprar:hover {
+    background-color: #a38633;
+  }
+}
 }
