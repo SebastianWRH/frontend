@@ -232,6 +232,7 @@ h2 {
 .contenedor-imagen:hover .texto-encima {
   opacity: 1;
   pointer-events: auto;
+  z-index: 5;
 }
 .overlay {
   position: absolute;
@@ -474,13 +475,11 @@ h2 {
   }
 
   .contenedor-imagen {
-    position: relative; /* necesario para posicionar el texto arriba */
+
     width: 100% !important;
     max-width: 100% !important;
     border-radius: 10px;
     overflow: hidden;
-    cursor: pointer;
-    background-color: transparent;
     margin: 0 auto;
     border: none;
     overflow: hidden;
@@ -504,35 +503,7 @@ h2 {
 
   /* Texto arriba a la izquierda, encima de la imagen */
   .texto-encima {
-    position: absolute !important;
-    top: 10px;
-    left: 10px;
-    transform: none !important;
-
-    padding: 0.3rem 0.8rem;
-    border-radius: 5px;
-    color: #333;
-    z-index: 10;
-    text-align: left;
-    max-width: 70%;
-  }
-
-  .textito {
-    font-family: sans-serif;
-    font-size: 1.3rem !important;
-    font-weight: 600;
-    margin: 0;
-    position: static !important;
-    top: auto !important;
-    right: auto !important;
-  }
-
-  /* Botón "Ver Todo" centrado debajo de la imagen */
-    .btn-comprar {
-    }
-
-  .btn-comprar:hover {
-    background-color: #a38633;
+    display: none ;
   }
 }
 }
