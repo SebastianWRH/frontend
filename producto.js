@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         <div class="info-detalle">
           <h2>${producto.nombre}</h2>
-          <p class="precio"><strong>${producto.precio}</strong></p>
+          <p class="precio">S/ <strong>${producto.precio}</strong></p>
 
           <div class="color-producto">
             <label>Color: <span id="color-seleccionado">Ninguno</span></label>
