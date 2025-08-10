@@ -178,6 +178,16 @@ section {
   border-bottom: 1px solid #ddd;
 }
 
+ .producto h3 {
+    margin: 8px 0 4px;
+    font-size: 20px;
+    line-height: 1.3;             /* más espacio entre líneas */
+    word-wrap: break-word;        /* corta palabras largas */
+    overflow-wrap: break-word;
+    white-space: normal; 
+    
+ }
+
 .carrito-header h3 {
   margin: 0;
 }
@@ -531,6 +541,12 @@ section {
   .producto h3 {
     margin: 8px 0 4px;
     font-size: 0.95rem;
+    line-height: 1.3;             /* más espacio entre líneas */
+    word-wrap: break-word;        /* corta palabras largas */
+    overflow-wrap: break-word;
+    white-space: normal; 
+    
+
   }
 
   .producto p {

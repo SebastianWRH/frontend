@@ -222,7 +222,10 @@ document.getElementById('formProducto').addEventListener('submit', async (e) => 
     precio: parseFloat(document.getElementById('precio').value),
     categoria: document.getElementById('categoria').value,
     stock: parseInt(document.getElementById('stock').value),
-    miniatura: document.getElementById('miniatura').value
+    miniatura: document.getElementById('miniatura').value,
+    imagenes: document.getElementById('imagenes').value
+      ? document.getElementById('imagenes').value.split(',').map(url => url.trim())
+      : []
   };
 
   const id = document.getElementById('id').value;
