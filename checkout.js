@@ -1,147 +1,176 @@
+// ======================
+// 🔹 Configuración Culqi
+// ======================
+Culqi.publicKey = 'pk_test_LM7miS6X1pqLKSl5'; // tu llave pública
+
+function configurarCulqi(totalCompra) {
+    Culqi.settings({
+        title: 'Aurora Bisutería',
+        currency: 'PEN',
+        amount: Math.round(totalCompra * 100) // convertir a céntimos
+    });
+}
+
+// ======================
+// 🔹 Mostrar Carrito y Botón Confirmar
+// ======================
 document.addEventListener('DOMContentLoaded', () => {
-  const btnConfirmar = document.getElementById('btn-confirmar');
-  const resumenCarrito = document.getElementById('resumen-carrito');
-  const totalSpan = document.getElementById('checkout-total');
+    const btnConfirmar = document.getElementById('btn-confirmar');
+    const resumenCarrito = document.getElementById('resumen-carrito');
+    const totalSpan = document.getElementById('checkout-total');
 
-  const usuario = JSON.parse(localStorage.getItem('usuario'));
-  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-  // Mostrar productos en la interfaz
-  function mostrarResumenCarrito() {
-    resumenCarrito.innerHTML = '';
+    function mostrarResumenCarrito() {
+        resumenCarrito.innerHTML = '';
 
-    if (carrito.length === 0) {
-      resumenCarrito.innerHTML = '<p>Tu carrito está vacío.</p>';
-      totalSpan.textContent = 'S/ 0.00';
-      btnConfirmar.disabled = true;
-      return;
+        if (carrito.length === 0) {
+            resumenCarrito.innerHTML = '<p>Tu carrito está vacío.</p>';
+            totalSpan.textContent = 'S/ 0.00';
+            btnConfirmar.disabled = true;
+            return;
+        }
+
+        let total = 0;
+
+        carrito.forEach(item => {
+            let precioNum = typeof item.precio === 'number'
+                ? item.precio
+                : Number(String(item.precio).replace(/[^\d.-]+/g, '')) || 0;
+
+            const subtotal = precioNum * item.cantidad;
+            total += subtotal;
+
+            resumenCarrito.innerHTML += `
+                <div class="checkout-item">
+                    <img src="${item.imagen}" alt="${item.nombre}" class="checkout-item-img" />
+                    <p><strong>${item.nombre}</strong></p>
+                    <p><strong>Cantidad:</strong> x${item.cantidad} </p>
+                    <p><strong>Color:</strong> ${item.color}</p>
+                    <p>S/ ${subtotal.toFixed(2)}</p>
+                </div>
+            `;
+        });
+
+        totalSpan.textContent = `${total.toFixed(2)}`;
     }
 
-    let total = 0;
+    mostrarResumenCarrito();
 
-    carrito.forEach(item => {
-      // Normalizar precio
-      let precioNum = 0;
-      if (typeof item.precio === 'number') precioNum = item.precio;
-      else if (typeof item.precio === 'string') {
-        precioNum = Number(String(item.precio).replace(/[^\d.-]+/g, '')) || 0;
-      }
+    if (!btnConfirmar) return;
 
-      const subtotal = precioNum * item.cantidad;
-      total += subtotal;
+    btnConfirmar.addEventListener('click', () => {
+        if (!usuario || !usuario.id) {
+            alert('Debes iniciar sesión para confirmar la compra.');
+            window.location.href = 'login.html';
+            return;
+        }
 
-      const itemHTML = `
-        <div class="checkout-item">
-          <img src="${item.imagen}" alt="${item.nombre}" class="checkout-item-img" />
-          <p><strong>${item.nombre}</strong></p>
-          <p><strong>Cantidad:</strong> x${item.cantidad} </p>
-          <p><strong>Color:</strong>${item.color}</p>
-          <p>S/ ${(subtotal).toFixed(2)}</p>
-        </div>
-      `;
-      resumenCarrito.innerHTML += itemHTML;
+        if (carrito.length === 0) {
+            alert('Tu carrito está vacío.');
+            return;
+        }
+
+        const total = carrito.reduce((s, it) => {
+            let precioNum = typeof it.precio === 'number'
+                ? it.precio
+                : Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0;
+            return s + (precioNum * it.cantidad);
+        }, 0);
+
+        configurarCulqi(total); // 🔹 Configurar monto
+        Culqi.open(); // 🔹 Abre el formulario de pago
     });
 
-    totalSpan.textContent = ` ${total.toFixed(2)}`;
-  }
+    rellenarDatosEnvio();
+});
 
-  mostrarResumenCarrito();
-
-  // Si no estamos en la página de checkout, salir
-  if (!btnConfirmar) return;
-
-  btnConfirmar.addEventListener('click', async () => {
-    if (!usuario || !usuario.id) {
-      alert('Debes iniciar sesión para confirmar la compra.');
-      window.location.href = 'login.html';
-      return;
-    }
-
-    if (carrito.length === 0) {
-      alert('Tu carrito está vacío.');
-      return;
-    }
-
-    const items = carrito.map(it => {
-      let precioNum = 0;
-      if (typeof it.precio === 'number') precioNum = it.precio;
-      else if (typeof it.precio === 'string') {
-        precioNum = Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0;
-      }
-
-      return {
-        id_producto: it.id,
-        cantidad: Number(it.cantidad) || 1,
-        precio_unitario: precioNum
-      };
-    });
-
-    const total = items.reduce((s, it) => s + (it.cantidad * it.precio_unitario), 0);
-
-    if (!confirm(`Confirmar compra por S/ ${total.toFixed(2)} ?`)) return;
+// ======================
+// 🔹 Datos de Envío
+// ======================
+document.addEventListener("DOMContentLoaded", async () => {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    if (!usuario) return;
 
     try {
-      btnConfirmar.disabled = true;
-      btnConfirmar.textContent = 'Procesando...';
+        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/usuario/${usuario.id}`);
+        const datos = await res.json();
 
-      const res = await fetch('https://aurora-backend-ve7u.onrender.com/pedido', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id_usuario: usuario.id,
-          total,
-          items
-        })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error('Respuesta error /pedidos:', data);
-        alert(data.mensaje || 'Error al crear el pedido');
-        btnConfirmar.disabled = false;
-        btnConfirmar.textContent = 'Confirmar compra';
-        return;
-      }
-
-      alert('Pedido confirmado. ID: ' + data.id_pedido);
-      localStorage.removeItem('carrito');
-      window.location.href = `detalle_pedido.html?id=${data.id_pedido}`;
-    } catch (err) {
-      console.error('Error al confirmar pedido:', err);
-      alert('No se pudo conectar con el servidor.');
-      btnConfirmar.disabled = false;
-      btnConfirmar.textContent = 'Confirmar compra';
+        document.getElementById("direccion").textContent = datos.direccion || "-";
+        document.getElementById("departamento").textContent = datos.departamento || "-";
+        document.getElementById("provincia").textContent = datos.provincia || "-";
+        document.getElementById("distrito").textContent = datos.distrito || "-";
+        document.getElementById("celular").textContent = datos.celular || "-";
+    } catch (error) {
+        console.error("Error al cargar datos de envío:", error);
     }
-  });
-
-  rellenarDatosEnvio();
-
 });
 
+// ======================
+// 🔹 Función Culqi Callback
+// ======================
+function culqi() {
+    if (Culqi.token) {
+        const token = Culqi.token.id;
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const total = carrito.reduce((s, it) => {
+            let precioNum = typeof it.precio === 'number'
+                ? it.precio
+                : Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0;
+            return s + (precioNum * it.cantidad);
+        }, 0);
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
-  if (!usuario) return;
+        // 1️⃣ Enviar token a backend para procesar pago
+        fetch('https://aurora-backend-ve7u.onrender.com/pagar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, monto: total })
+        })
+        .then(res => res.json())
+        .then(async data => {
+            if (data.success) {
+                // 2️⃣ Crear pedido en backend
+                const items = carrito.map(it => ({
+                    id_producto: it.id,
+                    cantidad: Number(it.cantidad) || 1,
+                    precio_unitario: typeof it.precio === 'number'
+                        ? it.precio
+                        : Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0
+                }));
 
-  try {
-    const res = await fetch(`https://aurora-backend-ve7u.onrender.com/usuario/${usuario.id}`);
-    const datos = await res.json();
+                const pedidoRes = await fetch('https://aurora-backend-ve7u.onrender.com/pedido', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id_usuario: usuario.id,
+                        total,
+                        items
+                    })
+                });
 
-    // Insertamos en los spans directamente
-    document.getElementById("direccion").textContent = datos.direccion || "-";
-    document.getElementById("departamento").textContent = datos.departamento || "-";
-    document.getElementById("provincia").textContent = datos.provincia || "-";
-    document.getElementById("distrito").textContent = datos.distrito || "-";
-    document.getElementById("celular").textContent = datos.celular || "-";
+                const pedidoData = await pedidoRes.json();
 
-  } catch (error) {
-    console.error("Error al cargar datos de envío:", error);
-  }
+                if (pedidoRes.ok) {
+                    alert('Pago y pedido confirmados 🎉');
+                    localStorage.removeItem('carrito');
+                    window.location.href = `detalle_pedido.html?id=${pedidoData.id_pedido}`;
+                } else {
+                    alert('Pago realizado, pero error al registrar el pedido.');
+                }
+            } else {
+                alert('Error en el pago ❌');
+                console.error(data.error);
+            }
+        })
+        .catch(err => {
+            console.error('Error al procesar pago:', err);
+            alert('Error al procesar pago.');
+        });
 
-
-  
-});
-
-
-
+    } else {
+        console.error(Culqi.error);
+        alert('Error al procesar el pago.');
+    }
+}
