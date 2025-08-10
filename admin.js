@@ -190,6 +190,8 @@ async function cargarProductos() {
           document.getElementById('categoria').value = producto.categoria;
           document.getElementById('stock').value = producto.stock;
           document.getElementById('miniatura').value = producto.miniatura;
+          document.getElementById('imagenes').value = producto.imagenes ? producto.imagenes.join(', ') : '';
+
 
           document.getElementById('modalProducto').style.display = 'block';
         } catch (err) {
