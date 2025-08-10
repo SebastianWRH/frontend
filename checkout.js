@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!btnConfirmar) return;
 
     btnConfirmar.addEventListener('click', () => {
+        e.preventDefault();
         if (!usuario || !usuario.id) {
             alert('Debes iniciar sesión para confirmar la compra.');
             window.location.href = 'login.html';
