@@ -111,7 +111,7 @@ function escapeHtml(text) {
     .replaceAll("'", '&#39;');
 }
 
-// ---------------- confirmar compra ----------------
+//---------------- confirmar compra ----------------
 function setupConfirmarCompra(button, carritoSlide) {
   button.addEventListener('click', async () => {
     const usuario = JSON.parse(localStorage.getItem('usuario'));
