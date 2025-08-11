@@ -127,7 +127,13 @@ function culqi() {
         fetch('https://aurora-backend-ve7u.onrender.com/pagar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token, monto: total })
+            body: JSON.stringify({
+              token,
+              monto: total,
+              email: usuario.email,
+              id_usuario: usuario.id,
+              items
+    })
         })
         .then(res => res.json())
         .then(async data => {
@@ -173,5 +179,42 @@ function culqi() {
     } else {
         console.error(Culqi.error);
         alert('Error al procesar el pago.');
+    }
+}
+
+
+
+
+
+
+
+// Configurar Culqi con tu llave pública
+Culqi.publicKey = 'TU_LLAVE_PUBLICA';
+
+document.getElementById('btn-pagar').addEventListener('click', function () {
+    Culqi.settings({
+        title: 'Mi Tienda',
+        currency: 'PEN',
+        amount: 5000, // Monto en céntimos (5000 = S/ 50.00)
+        description: 'Compra en mi tienda'
+    });
+    Culqi.open();
+});
+
+function culqi() {
+    if (Culqi.token) {
+        let token = Culqi.token.id;
+
+        // Enviar el token a tu backend para crear el cargo
+        fetch('https://tu-backend.com/pagar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token })
+        })
+        .then(res => res.json())
+        .then(data => console.log('Pago exitoso:', data))
+        .catch(err => console.error('Error:', err));
+    } else {
+        console.log(Culqi.error);
     }
 }

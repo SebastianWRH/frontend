@@ -190,8 +190,17 @@ async function cargarProductos() {
           document.getElementById('categoria').value = producto.categoria;
           document.getElementById('stock').value = producto.stock;
           document.getElementById('miniatura').value = producto.miniatura;
-          document.getElementById('imagenes').value = producto.imagenes ? producto.imagenes.join(', ') : '';
-
+          let imagenesArray = [];
+            if (typeof producto.imagenes === 'string') {
+              try {
+                imagenesArray = JSON.parse(producto.imagenes);
+              } catch {
+                imagenesArray = [];
+              }
+            } else if (Array.isArray(producto.imagenes)) {
+              imagenesArray = producto.imagenes;
+            }
+            document.getElementById('imagenes').value = imagenesArray.join(', ');
 
           document.getElementById('modalProducto').style.display = 'block';
         } catch (err) {
