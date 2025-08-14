@@ -1,13 +1,13 @@
 // ======================
 // 🔹 Configuración Culqi
 // ======================
-Culqi.publicKey = 'pk_test_LM7miS6X1pqLKSl5'; // tu llave pública
+Culqi.publicKey = 'pk_test_LM7miS6X1pqLKSl5'; // Tu llave pública
 
 function configurarCulqi(totalCompra) {
     Culqi.settings({
         title: 'Aurora Bisutería',
         currency: 'PEN',
-        amount: Math.round(totalCompra * 100) // convertir a céntimos
+        amount: Math.round(totalCompra * 100) // céntimos
     });
 }
 
@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return s + (precioNum * it.cantidad);
         }, 0);
 
-        configurarCulqi(total); // 🔹 Configurar monto
-        Culqi.open(); // 🔹 Abre el formulario de pago
+        configurarCulqi(total); // Configurar monto
+        Culqi.open(); // Abrir formulario de pago
     });
 
     rellenarDatosEnvio();
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ======================
 // 🔹 Datos de Envío
 // ======================
-document.addEventListener("DOMContentLoaded", async () => {
+async function rellenarDatosEnvio() {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     if (!usuario) return;
 
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.error("Error al cargar datos de envío:", error);
     }
-});
+}
 
 // ======================
 // 🔹 Función Culqi Callback
@@ -116,12 +116,22 @@ function culqi() {
         const token = Culqi.token.id;
         const usuario = JSON.parse(localStorage.getItem('usuario'));
         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
         const total = carrito.reduce((s, it) => {
             let precioNum = typeof it.precio === 'number'
                 ? it.precio
                 : Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0;
             return s + (precioNum * it.cantidad);
         }, 0);
+
+        // Construir items ANTES de enviar
+        const items = carrito.map(it => ({
+            id_producto: it.id,
+            cantidad: Number(it.cantidad) || 1,
+            precio_unitario: typeof it.precio === 'number'
+                ? it.precio
+                : Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0
+        }));
 
         // 1️⃣ Enviar token a backend para procesar pago
         fetch('https://aurora-backend-ve7u.onrender.com/pagar', {
@@ -133,21 +143,13 @@ function culqi() {
               email: usuario.email,
               id_usuario: usuario.id,
               items
-    })
+            })
         })
         .then(res => res.json())
         .then(async data => {
             if (data.success) {
                 // 2️⃣ Crear pedido en backend
-                const items = carrito.map(it => ({
-                    id_producto: it.id,
-                    cantidad: Number(it.cantidad) || 1,
-                    precio_unitario: typeof it.precio === 'number'
-                        ? it.precio
-                        : Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0
-                }));
-
-                const pedidoRes = await fetch('https://aurora-backend-ve7u.onrender.com/pedido', {
+                const pedidoRes = await fetch('https://aurora-backend-ve7u.onrender.com/pedidos', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -179,42 +181,5 @@ function culqi() {
     } else {
         console.error(Culqi.error);
         alert('Error al procesar el pago.');
-    }
-}
-
-
-
-
-
-
-
-// Configurar Culqi con tu llave pública
-Culqi.publicKey = 'pk_test_LM7miS6X1pqLKSl5';
-
-document.getElementById('btn-pagar').addEventListener('click', function () {
-    Culqi.settings({
-        title: 'Mi Tienda',
-        currency: 'PEN',
-        amount: 5000, // Monto en céntimos (5000 = S/ 50.00)
-        description: 'Compra en mi tienda'
-    });
-    Culqi.open();
-});
-
-function culqi() {
-    if (Culqi.token) {
-        let token = Culqi.token.id;
-
-        // Enviar el token a tu backend para crear el cargo
-        fetch('https://tu-backend.com/pagar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token })
-        })
-        .then(res => res.json())
-        .then(data => console.log('Pago exitoso:', data))
-        .catch(err => console.error('Error:', err));
-    } else {
-        console.log(Culqi.error);
     }
 }
