@@ -509,23 +509,3 @@ header {
   background: #d4af37;
 }
 
-
-.mensaje-exito {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #4caf50;
-  color: white;
-  padding: 15px 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.5s, transform 0.5s;
-  z-index: 9999;
-}
-
-.mensaje-exito.show {
-  opacity: 1;
-  transform: translateY(0);
-}
