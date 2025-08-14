@@ -109,6 +109,7 @@ async function pagar(token, email) {
         if (data.success) {
             mensajeDiv.innerHTML = `<p style="color:green;">Pago exitoso. Pedido ID: ${data.pedido.id}</p>`;
             localStorage.removeItem("carrito"); // Vaciar carrito
+            Culqi.close();
         } else {
             mensajeDiv.innerHTML = `<p style="color:red;">Error: ${data.error.user_message || "No se pudo procesar el pago."}</p>`;
         }
