@@ -2,20 +2,18 @@
 // Configurar Culqi
 Culqi.publicKey = 'pk_test_LM7miS6X1pqLKSl5';
 // Cargar datos del usuario logueado
+// Autocompletar formulario con datos del usuario
 document.addEventListener("DOMContentLoaded", () => {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
-
     if (usuario) {
-        document.getElementById("direccion").textContent = usuario.direccion || "No registrado";
-        document.getElementById("departamento").textContent = usuario.departamento || "No registrado";
-        document.getElementById("provincia").textContent = usuario.provincia || "No registrado";
-        document.getElementById("distrito").textContent = usuario.distrito || "No registrado";
-        document.getElementById("celular").textContent = usuario.celular || "No registrado";
-    } else {
-        alert("Por favor, inicia sesión antes de continuar con la compra.");
-        window.location.href = "login.html";
+        document.querySelector('input[name="nombre"]').value = usuario.nombre || "";
+        document.querySelector('input[name="celular"]').value = usuario.celular || "";
+        document.querySelector('input[name="direccion"]').value = usuario.direccion || "";
+        document.querySelector('input[name="distrito"]').value = usuario.distrito || "";
+        document.querySelector('input[name="departamento"]').value = usuario.departamento || "";
     }
 });
+
 
 // Capturamos el formulario
 const formEnvio = document.getElementById("form-envio");
