@@ -110,6 +110,29 @@ async function pagar(token, email) {
             mensajeDiv.innerHTML = `<p style="color:green;">Pago exitoso. Pedido ID: ${data.pedido.id}</p>`;
             localStorage.removeItem("carrito"); // Vaciar carrito
             Culqi.close();
+            items.forEach(async (item) => {
+                try {
+                    // Paso 1: Consultar stock actual
+                    const resStock = await fetch(`https://aurora-backend-ve7u.onrender.com/stock/${item.id_producto}`);
+                    const stockData = await resStock.json();
+
+                    if (stockData.stock >= item.cantidad) {
+                        // Paso 2: Restar stock usando tu ruta de actualizar stock
+                        await fetch(`https://aurora-backend-ve7u.onrender.com/restar-stock`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                id_producto: item.id_producto,
+                                cantidad: item.cantidad
+                            })
+                        });
+                    } else {
+                        console.warn(`Stock insuficiente para el producto ${item.id_producto}`);
+                    }
+                } catch (err) {
+                    console.error(`Error al actualizar stock del producto ${item.id_producto}:`, err);
+                }
+            });    
         } else {
             mensajeDiv.innerHTML = `<p style="color:red;">Error: ${data.error.user_message || "No se pudo procesar el pago."}</p>`;
         }
