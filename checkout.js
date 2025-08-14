@@ -110,29 +110,24 @@ async function pagar(token, email) {
             mensajeDiv.innerHTML = `<p style="color:green;">Pago exitoso. Pedido ID: ${data.pedido.id}</p>`;
             localStorage.removeItem("carrito"); // Vaciar carrito
             Culqi.close();
-            items.forEach(async (item) => {
-                try {
-                    // Paso 1: Consultar stock actual
-                    const resStock = await fetch(`https://aurora-backend-ve7u.onrender.com/stock/${item.id}`);
-                    const stockData = await resStock.json();
 
-                    if (stockData.stock >= item.cantidad) {
-                        // Paso 2: Restar stock usando tu ruta de actualizar stock
-                        await fetch(`https://aurora-backend-ve7u.onrender.com/restar-stock`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                id_producto: item.id,
-                                cantidad: item.cantidad
-                            })
-                        });
-                    } else {
-                        console.warn(`Stock insuficiente para el producto ${item.id}`);
-                    }
-                } catch (err) {
-                    console.error(`Error al actualizar stock del producto ${item.id}:`, err);
+            // Actualizar stock
+            try {
+                const resStock = await fetch('https://aurora-backend-ve7u.onrender.com/restar-stock', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ items })  // <- items debe ser el array correcto
+                });
+
+                const dataStock = await resStock.json();
+                if (resStock.ok) {
+                    console.log('Stock actualizado:', dataStock);
+                } else {
+                    console.error('Error al actualizar stock:', dataStock);
                 }
-            });    
+            } catch (err) {
+                console.error('Error en fetch restar-stock:', err);
+            }
         } else {
             mensajeDiv.innerHTML = `<p style="color:red;">Error: ${data.error.user_message || "No se pudo procesar el pago."}</p>`;
         }
