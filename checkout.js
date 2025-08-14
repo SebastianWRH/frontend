@@ -1,21 +1,14 @@
-// ======================
-// 🔹 Configuración Culqi
-// ======================
-Culqi.publicKey = 'pk_test_LM7miS6X1pqLKSl5'; // Tu llave pública
-
-function configurarCulqi(totalCompra) {
-    Culqi.settings({
-        title: 'Aurora Bisutería',
-        currency: 'PEN',
-        amount: Math.round(totalCompra * 100) // céntimos
-    });
-}
-
-// ======================
-// 🔹 Mostrar Carrito y Botón Confirmar
-// ======================
 document.addEventListener('DOMContentLoaded', () => {
     const btnConfirmar = document.getElementById('btn-confirmar');
+    const formEnvio = document.getElementById('form-envio'); // 🔹 Nuevo
+
+    // 🔹 Evitar que el formulario recargue la página
+    if (formEnvio) {
+        formEnvio.addEventListener('submit', (e) => {
+            e.preventDefault(); // 🚫 evita el submit por defecto
+        });
+    }
+
     const resumenCarrito = document.getElementById('resumen-carrito');
     const totalSpan = document.getElementById('checkout-total');
 
@@ -60,8 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!btnConfirmar) return;
 
-    btnConfirmar.addEventListener('click', (e) => {
-        e.preventDefault();
+    btnConfirmar.addEventListener('click', () => {
         if (!usuario || !usuario.id) {
             alert('Debes iniciar sesión para confirmar la compra.');
             window.location.href = 'login.html';
@@ -86,100 +78,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     rellenarDatosEnvio();
 });
-
-// ======================
-// 🔹 Datos de Envío
-// ======================
-async function rellenarDatosEnvio() {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    if (!usuario) return;
-
-    try {
-        const res = await fetch(`https://aurora-backend-ve7u.onrender.com/usuario/${usuario.id}`);
-        const datos = await res.json();
-
-        document.getElementById("direccion").textContent = datos.direccion || "-";
-        document.getElementById("departamento").textContent = datos.departamento || "-";
-        document.getElementById("provincia").textContent = datos.provincia || "-";
-        document.getElementById("distrito").textContent = datos.distrito || "-";
-        document.getElementById("celular").textContent = datos.celular || "-";
-    } catch (error) {
-        console.error("Error al cargar datos de envío:", error);
-    }
-}
-
-// ======================
-// 🔹 Función Culqi Callback
-// ======================
-function culqi() {
-    if (Culqi.token) {
-        const token = Culqi.token.id;
-        const usuario = JSON.parse(localStorage.getItem('usuario'));
-        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-        const total = carrito.reduce((s, it) => {
-            let precioNum = typeof it.precio === 'number'
-                ? it.precio
-                : Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0;
-            return s + (precioNum * it.cantidad);
-        }, 0);
-
-        // Construir items ANTES de enviar
-        const items = carrito.map(it => ({
-            id_producto: it.id,
-            cantidad: Number(it.cantidad) || 1,
-            precio_unitario: typeof it.precio === 'number'
-                ? it.precio
-                : Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0
-        }));
-
-        // 1️⃣ Enviar token a backend para procesar pago
-        fetch('https://aurora-backend-ve7u.onrender.com/pagar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              token,
-              monto: total,
-              email: usuario.email,
-              id_usuario: usuario.id,
-              items
-            })
-        })
-        .then(res => res.json())
-        .then(async data => {
-            if (data.success) {
-                // 2️⃣ Crear pedido en backend
-                const pedidoRes = await fetch('https://aurora-backend-ve7u.onrender.com/pedidos', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        id_usuario: usuario.id,
-                        total,
-                        items
-                    })
-                });
-
-                const pedidoData = await pedidoRes.json();
-
-                if (pedidoRes.ok) {
-                    alert('Pago y pedido confirmados 🎉');
-                    localStorage.removeItem('carrito');
-                    window.location.href = `detalle_pedido.html?id=${pedidoData.id_pedido}`;
-                } else {
-                    alert('Pago realizado, pero error al registrar el pedido.');
-                }
-            } else {
-                alert('Error en el pago ❌');
-                console.error(data.error);
-            }
-        })
-        .catch(err => {
-            console.error('Error al procesar pago:', err);
-            alert('Error al procesar pago.');
-        });
-
-    } else {
-        console.error(Culqi.error);
-        alert('Error al procesar el pago.');
-    }
-}
