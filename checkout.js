@@ -97,7 +97,7 @@ async function pagar(token, email) {
             body: JSON.stringify({
                 token,
                 amount: amountCents,
-                currency_code,
+                currency_code:"PEN",
                 email,
                 id_usuario,
                 items
