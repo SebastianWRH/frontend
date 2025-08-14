@@ -113,7 +113,7 @@ async function pagar(token, email) {
             items.forEach(async (item) => {
                 try {
                     // Paso 1: Consultar stock actual
-                    const resStock = await fetch(`https://aurora-backend-ve7u.onrender.com/stock/${item.id_producto}`);
+                    const resStock = await fetch(`https://aurora-backend-ve7u.onrender.com/stock/${item.id}`);
                     const stockData = await resStock.json();
 
                     if (stockData.stock >= item.cantidad) {
