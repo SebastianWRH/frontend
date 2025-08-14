@@ -189,7 +189,7 @@ function culqi() {
 
 
 // Configurar Culqi con tu llave pública
-Culqi.publicKey = 'TU_LLAVE_PUBLICA';
+Culqi.publicKey = 'pk_test_LM7miS6X1pqLKSl5';
 
 document.getElementById('btn-pagar').addEventListener('click', function () {
     Culqi.settings({
