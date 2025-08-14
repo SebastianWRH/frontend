@@ -1,5 +1,21 @@
+
 // Configurar Culqi
 Culqi.publicKey = 'pk_test_LM7miS6X1pqLKSl5';
+// Cargar datos del usuario logueado
+document.addEventListener("DOMContentLoaded", () => {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    if (usuario) {
+        document.getElementById("direccion").textContent = usuario.direccion || "No registrado";
+        document.getElementById("departamento").textContent = usuario.departamento || "No registrado";
+        document.getElementById("provincia").textContent = usuario.provincia || "No registrado";
+        document.getElementById("distrito").textContent = usuario.distrito || "No registrado";
+        document.getElementById("celular").textContent = usuario.celular || "No registrado";
+    } else {
+        alert("Por favor, inicia sesión antes de continuar con la compra.");
+        window.location.href = "login.html";
+    }
+});
 
 // Capturamos el formulario
 const formEnvio = document.getElementById("form-envio");
@@ -9,6 +25,37 @@ const mensajeDiv = document.getElementById("mensaje");
 const id_usuario = localStorage.getItem("id_usuario") || 1;
 const items = JSON.parse(localStorage.getItem("carrito")) || [];
 const monto = items.reduce((total, item) => total + (item.precio * item.cantidad), 0);
+// Mostrar productos en el checkout
+const cartItemsContainer = document.getElementById("cart-items");
+const cartTotalContainer = document.getElementById("cart-total");
+
+function renderCart() {
+    cartItemsContainer.innerHTML = ""; // Limpiar
+
+    if (items.length === 0) {
+        cartItemsContainer.innerHTML = "<p>Tu carrito está vacío.</p>";
+        cartTotalContainer.textContent = "S/ 0.00";
+        return;
+    }
+
+    let total = 0;
+    items.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("cart-item");
+        itemDiv.innerHTML = `
+            <span>${item.nombre} (x${item.cantidad})</span>
+            <span>S/ ${(item.precio * item.cantidad).toFixed(2)}</span>
+        `;
+        cartItemsContainer.appendChild(itemDiv);
+
+        total += item.precio * item.cantidad;
+    });
+
+    cartTotalContainer.textContent = `S/ ${total.toFixed(2)}`;
+}
+
+renderCart();
+
 
 // Evento de envío del formulario
 formEnvio.addEventListener("submit", function (e) {

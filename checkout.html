@@ -65,35 +65,41 @@
     </div>
   </nav>
   </header>
-    <main>
-        <h1>Finalizar Compra</h1>
-        <form id="form-envio" class="form-envio">
-            <label>Nombre completo</label>
-            <input type="text" name="nombre" required>
+<main class="checkout-container">
+  
+  <!-- Columna izquierda: Carrito -->
+  <section class="checkout-cart">
+    <h2>Tu Carrito</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total">
+      <strong>Total: </strong> <span id="cart-total">S/ 0.00</span>
+    </div>
+  </section>
 
-            <label>Correo electrónico</label>
-            <input type="email" name="email" required>
+  <!-- Columna derecha: Datos de envío -->
+  <section class="checkout-form">
+    <h2>Datos de Envío</h2>
+    <form id="form-envio">
+      <label>Nombre Completo</label>
+      <input type="text" name="nombre" required>
 
-            <label>Dirección</label>
-            <input type="text" name="direccion" required>
+      <label>Celular</label>
+      <input type="tel" name="celular" required>
 
-            <label>Departamento</label>
-            <input type="text" name="departamento" required>
+      <label>Dirección</label>
+      <input type="text" name="direccion" required>
 
-            <label>Provincia</label>
-            <input type="text" name="provincia" required>
+      <label>Distrito</label>
+      <input type="text" name="distrito" required>
 
-            <label>Distrito</label>
-            <input type="text" name="distrito" required>
+      <label>Departamento</label>
+      <input type="text" name="departamento" required>
 
-            <label>Celular</label>
-            <input type="text" name="celular" required>
+      <button type="submit" class="btn-pagar">Proceder al Pago</button>
+    </form>
+  </section>
 
-            <button type="submit" id="btn-pagar">Pagar</button>
-        </form>
-
-        <div id="mensaje"></div>
-    </main>
+</main>
 <script src="https://checkout.culqi.com/js/v4"></script>
 <script src="carrito-slide.js"></script>
 <script src="panel-sesion.js"></script>
