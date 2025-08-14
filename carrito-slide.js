@@ -110,13 +110,12 @@ function escapeHtml(text) {
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 }
-
 //---------------- confirmar compra ----------------
 function setupConfirmarCompra(button, carritoSlide) {
-  button.addEventListener('click', async () => {
+  button.addEventListener('click', () => {
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     if (!usuario || !usuario.id) {
-      alert('Debes iniciar sesión para confirmar la compra.');
+      alert('Debes iniciar sesión para continuar con la compra.');
       window.location.href = 'login.html';
       return;
     }
@@ -127,64 +126,10 @@ function setupConfirmarCompra(button, carritoSlide) {
       return;
     }
 
-    // Construir items normalizados y total
-    const items = carrito.map(it => {
-      let precioNum = 0;
-      if (typeof it.precio === 'number') precioNum = it.precio;
-      else if (typeof it.precio === 'string') {
-        precioNum = Number(String(it.precio).replace(/[^\d.-]+/g, '')) || 0;
-      }
-      return {
-        id_producto: it.id,
-        cantidad: Number(it.cantidad) || 1,
-        precio_unitario: precioNum
-      };
-    });
+    // Cerrar slide del carrito
+    carritoSlide.classList.remove('visible');
 
-    const total = items.reduce((s, it) => s + (it.cantidad * it.precio_unitario), 0);
-
-    if (!confirm(`Confirmar compra por S/ ${total.toFixed(2)} ?`)) return;
-
-    // UI: deshabilitar botón mientras se procesa
-    const origText = button.textContent;
-    button.disabled = true;
-    button.textContent = 'Procesando...';
-
-    try {
-      const res = await fetch('https://aurora-backend-ve7u.onrender.com/pedidos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id_usuario: usuario.id,
-          total,
-          items
-        })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error('Error al crear pedido:', data);
-        alert(data.mensaje || 'Error al crear pedido');
-        button.disabled = false;
-        button.textContent = origText;
-        return;
-      }
-
-      // éxito
-      alert('Pedido confirmado. ID: ' + data.id_pedido);
-      // vaciar carrito
-      localStorage.removeItem('carrito');
-      renderizarCarritoEnSlide();
-      actualizarContadorCarrito();
-      // cerrar slide y redirigir al detalle
-      carritoSlide.classList.remove('visible');
-      window.location.href = `detalle_pedido.html?id=${data.id_pedido}`;
-    } catch (err) {
-      console.error('Error en la petición de pedido:', err);
-      alert('No se pudo confirmar el pedido. Intenta más tarde.');
-      button.disabled = false;
-      button.textContent = origText;
-    }
+    // Redirigir a la página de checkout
+    window.location.href = 'checkout.html';
   });
 }
