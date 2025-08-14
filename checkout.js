@@ -122,15 +122,15 @@ async function pagar(token, email) {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                id_producto: item.id_producto,
+                                id_producto: item.id,
                                 cantidad: item.cantidad
                             })
                         });
                     } else {
-                        console.warn(`Stock insuficiente para el producto ${item.id_producto}`);
+                        console.warn(`Stock insuficiente para el producto ${item.id}`);
                     }
                 } catch (err) {
-                    console.error(`Error al actualizar stock del producto ${item.id_producto}:`, err);
+                    console.error(`Error al actualizar stock del producto ${item.id}:`, err);
                 }
             });    
         } else {
