@@ -22,7 +22,7 @@ const mensajeDiv = document.getElementById("mensaje");
 // Simulación de datos del carrito
 const id_usuario = localStorage.getItem("id_usuario") || 1;
 const items = JSON.parse(localStorage.getItem("carrito")) || [];
-const monto = items.reduce((total, item) => total + (item.precio * item.cantidad), 0);
+const amount = items.reduce((total, item) => total + (item.precio * item.cantidad), 0);
 // Mostrar productos en el checkout
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotalContainer = document.getElementById("cart-total");
