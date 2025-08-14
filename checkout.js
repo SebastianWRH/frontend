@@ -66,7 +66,7 @@ formEnvio.addEventListener("submit", function (e) {
     // Abrir Culqi
     Culqi.settings({
         title: 'Aurora Store',
-        currency: 'PEN',
+        currency_code: 'PEN',
         description: 'Compra en línea',
         amount: amount * 100 // En céntimos
     });
