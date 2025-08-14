@@ -94,10 +94,9 @@ async function pagar(token, email) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 token,
-                monto,
-                email,
-                id_usuario,
-                items
+                amount,
+                currency_code,
+                email
             })
         });
 
