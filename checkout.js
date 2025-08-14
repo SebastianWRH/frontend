@@ -89,7 +89,7 @@ function culqi() {
 // Función para enviar datos al backend
 async function pagar(token, email) {
     try {
-        const res = await fetch("https://aurora-backend-ve7u.onrender.com/pagar", {
+        const res = await fetch("https://aurora-backend-ve7u.onrender.com/api/pagar", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
