@@ -68,7 +68,7 @@ formEnvio.addEventListener("submit", function (e) {
         title: 'Aurora Store',
         currency: 'PEN',
         description: 'Compra en línea',
-        amount: monto * 100 // En céntimos
+        amount: amount * 100 // En céntimos
     });
 
     Culqi.open();
