@@ -23,6 +23,7 @@ const mensajeDiv = document.getElementById("mensaje");
 const id_usuario = localStorage.getItem("id_usuario") || 1;
 const items = JSON.parse(localStorage.getItem("carrito")) || [];
 const amount = items.reduce((total, item) => total + (item.precio * item.cantidad), 0);
+const currency_code = "PEN";
 // Mostrar productos en el checkout
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotalContainer = document.getElementById("cart-total");
@@ -66,7 +67,7 @@ formEnvio.addEventListener("submit", function (e) {
     // Abrir Culqi
     Culqi.settings({
         title: 'Aurora Store',
-        currency_code: 'PEN',
+        currency: 'PEN',
         description: 'Compra en línea',
         amount: amount * 100 // En céntimos
     });
