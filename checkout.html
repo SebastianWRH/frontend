@@ -65,29 +65,35 @@
     </div>
   </nav>
   </header>
-  <main id="checkout">
-  <section class="checkout-container">
-    <h1>Resumen de tu Pedido</h1>
+    <main>
+        <h1>Finalizar Compra</h1>
+        <form id="form-envio" class="form-envio">
+            <label>Nombre completo</label>
+            <input type="text" name="nombre" required>
 
-    <!-- Lista de productos -->
-    <section id="resumen-carrito" class="checkout-resumen"></section>
-    <!-- Total -->
-    <div class="checkout-total">
-      <p><strong>Total:</strong> S/ <span id="checkout-total">0.00</span></p>
-    </div>
+            <label>Correo electrónico</label>
+            <input type="email" name="email" required>
 
-    <!-- Datos de envío -->
-    <form id="form-envio" class="form-envio">
-      <h2>Datos de Envío</h2>
-        <p><strong>Dirección:</strong> <span id="direccion"></span></p>
-        <p><strong>Departamento:</strong> <span id="departamento"></span></p>
-        <p><strong>Provincia:</strong> <span id="provincia"></span></p>
-        <p><strong>Distrito:</strong> <span id="distrito"></span></p>
-        <p><strong>Celular:</strong> <span id="celular"></span></p>
-        <button id="btn-confirmar" type="button">Pagar</button>
-    </form>
-  </section>
-</main>
+            <label>Dirección</label>
+            <input type="text" name="direccion" required>
+
+            <label>Departamento</label>
+            <input type="text" name="departamento" required>
+
+            <label>Provincia</label>
+            <input type="text" name="provincia" required>
+
+            <label>Distrito</label>
+            <input type="text" name="distrito" required>
+
+            <label>Celular</label>
+            <input type="text" name="celular" required>
+
+            <button type="submit" id="btn-pagar">Pagar</button>
+        </form>
+
+        <div id="mensaje"></div>
+    </main>
 <script src="https://checkout.culqi.com/js/v4"></script>
 <script src="carrito-slide.js"></script>
 <script src="panel-sesion.js"></script>
