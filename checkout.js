@@ -118,3 +118,24 @@ async function pagar(token, email) {
         mensajeDiv.innerHTML = `<p style="color:red;">Error de conexión con el servidor.</p>`;
     }
 }
+
+
+
+
+
+
+
+function mostrarExito() {
+  const mensaje = document.getElementById('mensajeExito');
+  mensaje.classList.add('show');
+
+  setTimeout(() => {
+    mensaje.classList.remove('show');
+  }, 3000); // desaparece después de 3 segundos
+}
+
+// En tu función de pago:
+if (data.success) {
+    mostrarExito(); // ✅ Llama a la animación
+    localStorage.removeItem("carrito"); // Vaciar carrito
+}
