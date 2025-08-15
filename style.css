@@ -45,7 +45,7 @@ header {
   display: flex;
   align-items: center; 
   justify-content: center; 
-  gap: 15px; 
+  gap: 1px; 
 }
 
 .icon-cart {
@@ -107,8 +107,22 @@ h2 {
 }
 
 
-/* Texto */
+/* search */
 
+.icon-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.search-svg {
+  width: 24px;
+  height: 24px;
+  stroke: rgb(0, 0, 0);
+}
 
 /* Boton */
 
@@ -395,7 +409,7 @@ h2 {
   }
 
   /* Ajustar iconos */
-  .icon-cart, .icon-login {
+  .icon-cart, .icon-login, .icon-search {
     width: 30px;
     height: 30px;
   }
